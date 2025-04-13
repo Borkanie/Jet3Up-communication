@@ -45,7 +45,7 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public bool IsConnected()
         {
-            return client != null;
+            return client != null && client.Connected;
         }
 
         /// <inheritdoc/>
@@ -203,6 +203,10 @@ namespace Implementation.Client
 
         public void SetHost(string address, int port)
         {
+            if (IsConnected())
+            {
+                StopCommand();
+            }
             ip = address;
             this.port = port;
         }
