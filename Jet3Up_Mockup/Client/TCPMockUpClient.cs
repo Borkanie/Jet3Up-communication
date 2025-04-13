@@ -4,13 +4,13 @@
 using Jet3UpHelpers;
 using Jet3UpHelpers.Factories;
 using Jet3UpHelpers.Resources;
-using Jet3UpInterfaces.Services;
+using Jet3UpInterfaces.Client;
 using Microsoft.VisualBasic;
 
-namespace Jet3Up.Services.Mockup
+namespace Mockup.Client
 {
     /// <inheritdoc/>
-    public class TCPMockUpClient : IClientService
+    public class TCPMockUpClient : IClient
     {
         private TCPMockUpClient tcpMockUpClient;
         private FileInterface fileInterface;
@@ -73,7 +73,7 @@ namespace Jet3Up.Services.Mockup
         }
 
         /// <inheritdoc/>
-        public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine, 
+        public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
             string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,
             int encoderResolution, string? anzahl)
         {

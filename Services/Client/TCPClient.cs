@@ -4,18 +4,18 @@
 using Jet3UpHelpers;
 using Jet3UpHelpers.Factories;
 using Jet3UpHelpers.Resources;
-using Jet3UpInterfaces.Services;
+using Jet3UpInterfaces.Client;
 using Microsoft.VisualBasic;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Jet3Up.Services
+namespace Implementation.Client
 {
     /// <summary>
     /// This implementation needs a machine to connect to in order to work. 
-    /// <inheritdoc cref="IClientService"/>
+    /// <inheritdoc cref="IClient"/>
     /// </summary>
-    public class TCPClientService : IClientService
+    public class TCPClient : IClient
     {
         private int expectedQuantity = 0;
         private TcpClient client;
@@ -70,7 +70,7 @@ namespace Jet3Up.Services
 
         /// <inheritdoc/>
         public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
-            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,int encoderResolution, string? anzahl)
+            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity, int encoderResolution, string? anzahl)
         {
             this.expectedQuantity = expectedQuantity;
             string message;

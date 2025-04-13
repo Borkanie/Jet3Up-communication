@@ -14,8 +14,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
-    <ProjectReference Include="..\Jet3Up_Mockup\Services.Mockup.csproj" />
+    <ProjectReference Include="..\Services\Implementation.csproj" />
+    <ProjectReference Include="..\Jet3Up_Mockup\Mockup.csproj" />
     <ProjectReference Include="..\Jet3UpHelpers\Helpers.csproj" />
   </ItemGroup>
 

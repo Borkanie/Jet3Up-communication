@@ -2,12 +2,12 @@
 // All Rigths reserved.
 using Jet3UpHelpers;
 
-namespace Jet3UpInterfaces.Services
+namespace Jet3UpInterfaces.Client
 {
     /// <summary>
     /// The service controlling the machine.
     /// </summary>
-    public interface IClientService
+    public interface IClient
     {
         /// <summary>
         /// Establishes communication to the machine.

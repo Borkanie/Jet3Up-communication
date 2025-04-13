@@ -3,12 +3,14 @@
 
 
 using Aerotec.Data.Model;
-using Jet3Up.Services;
-using Jet3Up.Services.Mockup;
 using Jet3UpInterfaces.Factories;
-using Jet3UpInterfaces.Services;
+using Jet3UpInterfaces.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mockup.Client;
+using Mockup.Factories;
+using Implementation.Factories;
+using Implementation.Client;
 
 namespace IoC
 {
@@ -23,10 +25,10 @@ namespace IoC
         {
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 #if !DEBUG
-            builder.Services.AddSingleton<IClientService, TCPClientService>();
+            builder.Services.AddSingleton<IClient, TCPClient>();
             builder.Services.AddSingleton<IUserFactory, UserFactory>();
 #else
-            builder.Services.AddSingleton<IClientService>(new TCPMockUpClient());
+            builder.Services.AddSingleton<IClient>(new TCPMockUpClient());
             builder.Services.AddSingleton<IUserFactory>(new UserFactoryMockup());
 
 #endif

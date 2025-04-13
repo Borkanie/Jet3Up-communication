@@ -4,7 +4,7 @@
 using Aerotec.Data.Model;
 using Jet3UpInterfaces.Factories;
 
-namespace Jet3Up.Services.Mockup
+namespace Mockup.Factories
 {
     /// <inheritdoc/>
     public class UserFactoryMockup : IUserFactory
@@ -45,14 +45,14 @@ namespace Jet3Up.Services.Mockup
             if (DefaultUsers.Contains(user))
             {
                 DefaultUsers.Remove(user);
-            }          
+            }
         }
 
         /// <inheritdoc/>
         public List<string> GetUserNames()
         {
             var names = new List<string>();
-            foreach( var user in users)
+            foreach (var user in users)
             {
                 names.Add(user.Name);
             }
@@ -84,7 +84,7 @@ namespace Jet3Up.Services.Mockup
         public void SaveChanges()
         {
             DefaultUsers.Clear();
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 var dummy = new User()
                 {

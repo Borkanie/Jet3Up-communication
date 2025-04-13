@@ -5,13 +5,13 @@ using Aerotec.Data.Model;
 using Jet3UpInterfaces.Factories;
 using Newtonsoft.Json;
 
-namespace Jet3Up.Services
+namespace Implementation.Factories
 {
     /// <inheritdoc/>
     public class UserFactory : IUserFactory
     {
-        private List<User> users =  new();
-        
+        private List<User> users = new();
+
         public UserFactory()
         {
             RevertChanges();
@@ -42,7 +42,7 @@ namespace Jet3Up.Services
                 string jsonFilePath = getUserDataFilePath();
                 string json = File.ReadAllText(jsonFilePath);
                 var currentUserBase = JsonConvert.DeserializeObject<List<User>>(json);
-                
+
                 if (currentUserBase != null && currentUserBase.Contains(user))
                 {
                     currentUserBase.Remove(user);
@@ -83,7 +83,7 @@ namespace Jet3Up.Services
                 string json = File.ReadAllText(jsonFilePath);
 
                 var defaultUsers = JsonConvert.DeserializeObject<List<User>>(json);
-                if(defaultUsers == null)
+                if (defaultUsers == null)
                 {
                     return;
                 }
