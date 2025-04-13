@@ -6,6 +6,7 @@ using Jet3UpHelpers.Factories;
 using Jet3UpHelpers.Resources;
 using Jet3UpInterfaces.Client;
 using Microsoft.VisualBasic;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -15,8 +16,11 @@ namespace Implementation.Client
     /// This implementation needs a machine to connect to in order to work. 
     /// <inheritdoc cref="IClient"/>
     /// </summary>
-    public class TCPClient : IClient
+    public class Jet3upTCPClient : IClient
     {
+        private string name = "Printer";
+        private string ip = "0.0.0.0";
+        private int port = 3000;
         private int expectedQuantity = 0;
         private TcpClient client;
         private NetworkStream tcpClientStream;
@@ -28,10 +32,8 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public bool Connect(string Ip, int port)
         {
-            client = new TcpClient(Ip, port);
-            tcpClientStream = client.GetStream();
-            tcpClientStream.ReadTimeout = 2000;
-            return true;
+            SetHost(Ip, port);
+            return Connect();
         }
 
         /// <inheritdoc/>
@@ -197,6 +199,36 @@ namespace Implementation.Client
         public void SetCount(int Expected, int current)
         {
             Send($"^0=CC{current} {Constants.vbTab} {Expected} 3999");
+        }
+
+        public void SetHost(string address, int port)
+        {
+            ip = address;
+            this.port = port;
+        }
+
+        public bool Connect()
+        {
+            client = new TcpClient(ip, port);
+            tcpClientStream = client.GetStream();
+            tcpClientStream.ReadTimeout = 2000;
+            return tcpClientStream.CanRead && tcpClientStream.CanWrite;
+        }
+
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
+
+        public string GetName() => name;
+
+        public override bool Equals(object? obj)
+        {
+            if(obj is Jet3upTCPClient)
+            {
+                return name == ((Jet3upTCPClient)obj).GetName();
+            }
+            return false;
         }
     }
 }

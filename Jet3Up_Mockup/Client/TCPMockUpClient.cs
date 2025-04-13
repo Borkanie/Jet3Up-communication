@@ -6,12 +6,15 @@ using Jet3UpHelpers.Factories;
 using Jet3UpHelpers.Resources;
 using Jet3UpInterfaces.Client;
 using Microsoft.VisualBasic;
+using System.Threading;
 
 namespace Mockup.Client
 {
     /// <inheritdoc/>
     public class TCPMockUpClient : IClient
     {
+        private string ip = "0.0.0.0";
+        private int port = 3000;
         private TCPMockUpClient tcpMockUpClient;
         private FileInterface fileInterface;
 
@@ -43,12 +46,10 @@ namespace Mockup.Client
         }
 
         /// <inheritdoc/>
-        public bool Connect(string Ip, int timeout)
+        public bool Connect(string Ip, int port)
         {
-            if (tcpMockUpClient == null)
-                tcpMockUpClient = new TCPMockUpClient();
-            fileInterface.Write("Connect method called with IP: " + Ip + " and timeout: " + timeout);
-            return true;
+            SetHost(Ip,port);
+            return Connect();
         }
 
         /// <inheritdoc/>
@@ -112,6 +113,47 @@ namespace Mockup.Client
         public void StopListening()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// only set's up local variables for later use.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="port"></param>
+        public void SetHost(string address, int port)
+        {
+            ip = address;
+            this.port = port;
+        }
+
+        // here port is used as timeout.
+        public bool Connect()
+        {
+            if (tcpMockUpClient == null)
+                tcpMockUpClient = new TCPMockUpClient();
+            fileInterface.Write("Connect method called with IP: " + ip + " and timeout: " + port);
+            return true;
+        }
+
+        private string name;
+
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
+
+        public string GetName()
+        {
+            return name;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is TCPMockUpClient)
+            {
+                return name == ((TCPMockUpClient)obj).GetName();
+            }
+            return false;
         }
     }
 }

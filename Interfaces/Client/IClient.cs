@@ -1,6 +1,7 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
 using Jet3UpHelpers;
+using System.Net;
 
 namespace Jet3UpInterfaces.Client
 {
@@ -13,9 +14,22 @@ namespace Jet3UpInterfaces.Client
         /// Establishes communication to the machine.
         /// </summary>
         /// <param name="Ip"></param>
-        /// <param name="timeout"></param>
+        /// <param name="port"></param>
         /// <returns></returns>
-        public bool Connect(string Ip, int timeout);
+        public bool Connect(string Ip, int port);
+
+        /// <summary>
+        /// Sets up a new host.
+        /// </summary>
+        /// <param name="address">The adress where we want to connect to.</param>
+        /// <param name="port">The port of the desired machine.</param>
+        /// <returns></returns>
+        public void SetHost(string address, int port);
+
+        /// <summary>
+        /// Establishes communication to the already set host.
+        /// </summary>
+        public bool Connect();
 
         /// <summary>
         /// Sends a message to the machine.
@@ -80,5 +94,9 @@ namespace Jet3UpInterfaces.Client
         public void SetCount(int expected, int current);
 
         public void StopListening();
+
+        public void SetName(string name);
+
+        public string GetName();
     }
 }

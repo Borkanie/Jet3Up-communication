@@ -11,6 +11,7 @@ using Mockup.Client;
 using Mockup.Factories;
 using Implementation.Factories;
 using Implementation.Client;
+using Interfaces.Factories;
 
 namespace IoC
 {
@@ -25,11 +26,11 @@ namespace IoC
         {
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 #if !DEBUG
-            builder.Services.AddSingleton<IClient, TCPClient>();
+            builder.Services.AddSingleton<IClientFactory, ClientFactory>();
             builder.Services.AddSingleton<IUserFactory, UserFactory>();
 #else
-            builder.Services.AddSingleton<IClient>(new TCPMockUpClient());
-            builder.Services.AddSingleton<IUserFactory>(new UserFactoryMockup());
+            builder.Services.AddSingleton<IClientFactory, MockCLientFactory>();
+            builder.Services.AddSingleton<IUserFactory, UserFactoryMockup>();
 
 #endif
             IHost host = builder.Build();
