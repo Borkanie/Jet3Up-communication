@@ -2,18 +2,14 @@
 // All Rigths reserved.
 
 using Helpers;
-using Interfaces.Client;
+using Helpers.Jobs;
 using Jet3UpHelpers;
 using Jet3UpHelpers.Factories;
 using Jet3UpHelpers.Resources;
 using Jet3UpInterfaces.Client;
 using Microsoft.VisualBasic;
-using System.Drawing;
-using System.Net;
 using System.Net.Sockets;
-using System.Reflection.PortableExecutable;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Implementation.Client
 {
@@ -80,22 +76,13 @@ namespace Implementation.Client
             string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity, int encoderResolution, string? anzahl)
         {
             this.expectedQuantity = expectedQuantity;
-            string message;
+
             Send(IClient.jet3UpJobStartSequence);
 
-            var jet3upMessageBuilder = Jet3UpMessageBuilder.Start().Create();
+            var job = new AerotecJob(HTZ, signature, ANR, BTIDX, controllerId, anzahl);
 
-            if (anzahl == null)
-            {
-
-                message = jet3upMessageBuilder.SetSize(size, rotation, machine, delay, encoderResolution: encoderResolution).Write(HTZ, signature, ANR, BTIDX, controllerId).End();
-            }
-            else
-            {
-                message = jet3upMessageBuilder.SetSize(FontSizeEnum.ISO1_7x5, rotation, MachineTypeEnum.Neagra, delay, encoderResolution: encoderResolution).Write(HTZ, signature, ANR, BTIDX, controllerId, anzahl).End();
-            }
             Thread.Sleep(500);
-            Send(message);
+            Send(job.getJobStartMessage());
             Send($"{IClient.jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
             Send(IClient.jet3UpEndOfJobSequence);
             Thread.Sleep(500);
@@ -258,14 +245,11 @@ namespace Implementation.Client
         private void SendJobToMachine()
         {
             
-            string message;
             Send(IClient.jet3UpJobStartSequence);
-            var jet3upMessageBuilder = Jet3UpMessageBuilder.Start().Create();
             
-            message = jet3upMessageBuilder.SetSize(job.FontSize, job.Rotation, MachineTypeEnum.Neagra, job.Delay, encoderResolution: job.EncoderResolution).Write(job.Objects).End();
-            
+           
             Thread.Sleep(500);
-            Send(message);
+            Send(job.getJobStartMessage());
             Send($"{IClient.jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
             Send(IClient.jet3UpEndOfJobSequence);
             Thread.Sleep(500);
