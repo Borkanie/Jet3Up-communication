@@ -23,11 +23,6 @@ namespace Implementation.Client
     /// </summary>
     public class Jet3upTCPClient : IClient
     {
-        private const string jet3UpJobStartSequence = "^0!RC";
-        private const string jet3UpStartSequence = "^0!GO";
-        private const string jet3UpStopSequence = "^0!ST";
-        private const string jet3UpEndOfJobSequence = "^0!EQ";
-        private const string jet3UpCurrentCounterSequence = "^0?CC";
         private string name = "Printer";
         private string ip = "0.0.0.0";
         private int port = 3000;
@@ -49,7 +44,7 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public void ContinueWriting()
         {
-            Send(jet3UpStartSequence);
+            Send(IClient.jet3UpStartSequence);
         }
 
         /// <inheritdoc/>
@@ -86,7 +81,7 @@ namespace Implementation.Client
         {
             this.expectedQuantity = expectedQuantity;
             string message;
-            Send(jet3UpJobStartSequence);
+            Send(IClient.jet3UpJobStartSequence);
 
             var jet3upMessageBuilder = Jet3UpMessageBuilder.Start().Create();
 
@@ -101,10 +96,10 @@ namespace Implementation.Client
             }
             Thread.Sleep(500);
             Send(message);
-            Send($"{jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
-            Send(jet3UpEndOfJobSequence);
+            Send($"{IClient.jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(IClient.jet3UpEndOfJobSequence);
             Thread.Sleep(500);
-            Send(jet3UpStartSequence);
+            Send(IClient.jet3UpStartSequence);
             if (anzahl == null)
                 StartListening();
         }
@@ -120,7 +115,7 @@ namespace Implementation.Client
         public void StopCommand()
         {
             StopListening();
-            Send(jet3UpStopSequence);
+            Send(IClient.jet3UpStopSequence);
         }
 
         /// <inheritdoc/>
@@ -195,7 +190,7 @@ namespace Implementation.Client
         private int AskForCurrentIndex(ref byte[] buffer)
         {
             int bytesRead;
-            Send(jet3UpCurrentCounterSequence);
+            Send(IClient.jet3UpCurrentCounterSequence);
             lock (client)
             {
                 bytesRead = tcpClientStream.Read(buffer, 0, buffer.Length);
@@ -207,7 +202,7 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public void SetCount(int Expected, int current)
         {
-            Send($"{jet3UpCurrentCounterSequence} {current} {Constants.vbTab} {Expected} 3999");
+            Send($"{IClient.jet3UpCurrentCounterSequence} {current} {Constants.vbTab} {Expected} 3999");
         }
 
         public void SetHost(string address, int port)
@@ -264,17 +259,17 @@ namespace Implementation.Client
         {
             
             string message;
-            Send(jet3UpJobStartSequence);
+            Send(IClient.jet3UpJobStartSequence);
             var jet3upMessageBuilder = Jet3UpMessageBuilder.Start().Create();
             
             message = jet3upMessageBuilder.SetSize(job.FontSize, job.Rotation, MachineTypeEnum.Neagra, job.Delay, encoderResolution: job.EncoderResolution).Write(job.Objects).End();
             
             Thread.Sleep(500);
             Send(message);
-            Send($"{jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
-            Send(jet3UpEndOfJobSequence);
+            Send($"{IClient.jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(IClient.jet3UpEndOfJobSequence);
             Thread.Sleep(500);
-            Send(jet3UpStartSequence);
+            Send(IClient.jet3UpStartSequence);
             
 
             StartListening();

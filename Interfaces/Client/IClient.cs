@@ -1,5 +1,6 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
+using Helpers;
 using Jet3UpHelpers;
 using System.Net;
 
@@ -10,6 +11,16 @@ namespace Jet3UpInterfaces.Client
     /// </summary>
     public interface IClient
     {
+        protected const string jet3UpJobStartSequence = "^0!RC";
+        protected const string jet3UpStartSequence = "^0!GO";
+        protected const string jet3UpStopSequence = "^0!ST";
+        protected const string jet3UpEndOfJobSequence = "^0!EQ";
+        protected const string jet3UpCurrentCounterSequence = "^0?CC";
+        /// <summary>
+        /// Safely closes current connection to the printer while ensuring the job stopped.
+        /// </summary>
+        public void Disconect();
+
         /// <summary>
         /// Establishes communication to the machine.
         /// </summary>
@@ -36,6 +47,12 @@ namespace Jet3UpInterfaces.Client
         /// </summary>
         /// <param name="text">The string to be send.</param>
         public void Send(string text);
+
+        /// <summary>
+        /// Loads a given job into the client.
+        /// </summary>
+        /// <param name="job"></param>
+        public void LoadJob(Job job);
 
         /// <summary>
         /// Creates the standardized objects to send to the machine to print.
