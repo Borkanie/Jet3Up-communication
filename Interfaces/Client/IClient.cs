@@ -2,7 +2,6 @@
 // All Rigths reserved.
 using Helpers;
 using Jet3UpHelpers;
-using System.Net;
 
 namespace Jet3UpInterfaces.Client
 {
@@ -11,11 +10,31 @@ namespace Jet3UpInterfaces.Client
     /// </summary>
     public interface IClient
     {
-        protected const string jet3UpJobStartSequence = "^0!RC";
-        protected const string jet3UpStartSequence = "^0!GO";
+        /// <summary>
+        /// Reset counter command.
+        /// </summary>
+        protected const string RC = "^0!RC";
+        
+        /// <summary>
+        /// Start job message that needs to be send to machine to start printing.
+        /// </summary>
+        protected const string GO = "^0!GO";
+
+        /// <summary>
+        /// Stop running job command.
+        /// </summary>
         protected const string jet3UpStopSequence = "^0!ST";
-        protected const string jet3UpEndOfJobSequence = "^0!EQ";
-        protected const string jet3UpCurrentCounterSequence = "^0?CC";
+
+        /// <summary>
+        /// Message that needs to be send to machine at the end of a job script.
+        /// </summary>
+        protected const string EQ = "^0!EQ";
+        
+        /// <summary>
+        /// Current counter message.
+        /// </summary>
+        protected const string CC = "^0?CC";
+        
         /// <summary>
         /// Safely closes current connection to the printer while ensuring the job stopped.
         /// </summary>

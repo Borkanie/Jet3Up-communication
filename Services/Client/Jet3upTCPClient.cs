@@ -40,7 +40,7 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public void ContinueWriting()
         {
-            Send(IClient.jet3UpStartSequence);
+            Send(IClient.GO);
         }
 
         /// <inheritdoc/>
@@ -77,16 +77,16 @@ namespace Implementation.Client
         {
             this.expectedQuantity = expectedQuantity;
 
-            Send(IClient.jet3UpJobStartSequence);
+            Send(IClient.RC);
 
             var job = new AerotecJob(HTZ, signature, ANR, BTIDX, controllerId, anzahl);
 
             Thread.Sleep(500);
             Send(job.getJobStartMessage());
-            Send($"{IClient.jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
-            Send(IClient.jet3UpEndOfJobSequence);
+            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(IClient.EQ);
             Thread.Sleep(500);
-            Send(IClient.jet3UpStartSequence);
+            Send(IClient.GO);
             if (anzahl == null)
                 StartListening();
         }
@@ -177,7 +177,7 @@ namespace Implementation.Client
         private int AskForCurrentIndex(ref byte[] buffer)
         {
             int bytesRead;
-            Send(IClient.jet3UpCurrentCounterSequence);
+            Send(IClient.CC);
             lock (client)
             {
                 bytesRead = tcpClientStream.Read(buffer, 0, buffer.Length);
@@ -189,7 +189,7 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public void SetCount(int Expected, int current)
         {
-            Send($"{IClient.jet3UpCurrentCounterSequence} {current} {Constants.vbTab} {Expected} 3999");
+            Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
         }
 
         public void SetHost(string address, int port)
@@ -245,15 +245,15 @@ namespace Implementation.Client
         private void SendJobToMachine()
         {
             
-            Send(IClient.jet3UpJobStartSequence);
+            Send(IClient.RC);
             
            
             Thread.Sleep(500);
             Send(job.getJobStartMessage());
-            Send($"{IClient.jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
-            Send(IClient.jet3UpEndOfJobSequence);
+            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(IClient.EQ);
             Thread.Sleep(500);
-            Send(IClient.jet3UpStartSequence);
+            Send(IClient.GO);
             
 
             StartListening();

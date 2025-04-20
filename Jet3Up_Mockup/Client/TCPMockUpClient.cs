@@ -54,7 +54,7 @@ namespace Mockup.Client
         public void ContinueWriting()
         {
             fileInterface.Write("ContinueWriting method called");
-            Send(IClient.jet3UpStartSequence);
+            Send(IClient.GO);
         }
 
         /// <inheritdoc/>
@@ -76,13 +76,14 @@ namespace Mockup.Client
             string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,
             int encoderResolution, string? anzahl)
         {
-            Send(IClient.jet3UpJobStartSequence);
+            Send(IClient.RC);
 
             var job = new AerotecJob(HTZ, signature, ANR, BTIDX, controllerId, anzahl);
 
             Send(job.getJobStartMessage());
-            Send($"{IClient.jet3UpCurrentCounterSequence}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
-            Send(IClient.jet3UpEndOfJobSequence);
+            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(IClient.EQ);
+            Send(IClient.GO);
             fileInterface.StartReading(expectedQuantity);
         }
 
@@ -96,7 +97,7 @@ namespace Mockup.Client
         /// <inheritdoc/>
         public void SetCount(int Expected, int current)
         {
-            Send($"{IClient.jet3UpCurrentCounterSequence} {current} {Constants.vbTab} {Expected} 3999");
+            Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
         }
 
         /// <inheritdoc/>

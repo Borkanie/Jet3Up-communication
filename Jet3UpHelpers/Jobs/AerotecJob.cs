@@ -69,6 +69,8 @@ namespace Helpers.Jobs
             {
                 message += Write();
             }
+            message += "^0*ENDJOB []" + Constants.vbCrLf
+                    + $"^0*ENDLJSCRIPT []" + Constants.vbCrLf;
             return message;
         }
 
