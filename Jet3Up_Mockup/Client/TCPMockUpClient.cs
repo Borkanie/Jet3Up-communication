@@ -156,5 +156,17 @@ namespace Mockup.Client
         {
             this.job = job;
         }
+
+        public void StartJob()
+        {
+
+            Send(IClient.RC);
+            Thread.Sleep(500);
+            Send(job.getJobStartMessage());
+            Send($"{IClient.CC}0" + Constants.vbTab + 3.ToString() + Constants.vbTab + "3999");
+            Send(IClient.EQ);
+            Thread.Sleep(500);
+            Send(IClient.GO);
+        }
     }
 }

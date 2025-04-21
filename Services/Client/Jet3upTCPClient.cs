@@ -242,7 +242,7 @@ namespace Implementation.Client
 
         }
 
-        private void SendJobToMachine()
+        public void StartJob()
         {
             
             Send(IClient.RC);

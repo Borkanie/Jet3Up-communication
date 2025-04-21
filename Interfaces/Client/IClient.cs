@@ -134,5 +134,7 @@ namespace Jet3UpInterfaces.Client
         public void SetName(string name);
 
         public string GetName();
+
+        public void StartJob();
     }
 }
