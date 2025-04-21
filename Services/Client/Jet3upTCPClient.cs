@@ -20,8 +20,6 @@ namespace Implementation.Client
     public class Jet3upTCPClient : IClient
     {
         private string name = "Printer";
-        private string ip = "0.0.0.0";
-        private int port = 3000;
         private int expectedQuantity = 0;
         private TcpClient client;
         private Stream tcpClientStream;
@@ -198,13 +196,13 @@ namespace Implementation.Client
             {
                 StopCommand();
             }
-            ip = address;
-            this.port = port;
+            Ip = address;
+            Port = port;
         }
 
         public bool Connect()
         {
-            client = new TcpClient(ip, port);
+            client = new TcpClient(Ip, Port);
             tcpClientStream = client.GetStream();
             tcpClientStream.ReadTimeout = 2000;
             return tcpClientStream.CanRead && tcpClientStream.CanWrite;
@@ -250,13 +248,16 @@ namespace Implementation.Client
            
             Thread.Sleep(500);
             Send(job.getJobStartMessage());
-            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(job.getCounterSetMessage());
             Send(IClient.EQ);
             Thread.Sleep(500);
             Send(IClient.GO);
             
 
-            StartListening();
+            //StartListening();
         }
+
+        public string Ip { get; set; } = "0.0.0.0";
+        public int Port { get; set; } = 3000;
     }
 }

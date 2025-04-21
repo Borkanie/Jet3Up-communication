@@ -33,8 +33,11 @@ namespace Jet3UpInterfaces.Client
         /// <summary>
         /// Current counter message.
         /// </summary>
-        protected const string CC = "^0?CC";
-        
+        protected const string CC = "^0=CC";
+
+        public string Ip { get; set; }
+        public int Port { get; set; }
+
         /// <summary>
         /// Safely closes current connection to the printer while ensuring the job stopped.
         /// </summary>

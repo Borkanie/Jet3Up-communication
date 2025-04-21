@@ -33,7 +33,7 @@ namespace Helpers.Jobs
         public MachineTypeEnum MachineType { get; set; } = MachineTypeEnum.Neagra;
 
         /*inheritdoc*/
-        public int Delay { get; set; }
+        public int Delay { get; set; } = 2000;
 
         /*inheritdoc*/
         public FontSizeEnum FontSize { get; set; }
@@ -310,6 +310,11 @@ namespace Helpers.Jobs
                 default:
                     throw new ArgumentOutOfRangeException(nameof(machineType));
             }
+        }
+
+        public string getCounterSetMessage()
+        {
+            return $"^0=CC0 {ExpectedQuantity} 3999";
         }
     }
 }

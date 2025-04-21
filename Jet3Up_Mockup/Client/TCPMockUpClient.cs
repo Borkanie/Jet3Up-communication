@@ -13,8 +13,6 @@ namespace Mockup.Client
     /// <inheritdoc/>
     public class TCPMockUpClient : IClient
     {
-        private string ip = "0.0.0.0";
-        private int port = 3000;
         private FileInterface fileInterface;
         public event EventHandler<Jet3UpMessageHendlerEventArgs> Jet3UpMessageHendler;
         public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs> Jet3UpCommunicationInterrupted;
@@ -97,7 +95,7 @@ namespace Mockup.Client
         /// <inheritdoc/>
         public void SetCount(int Expected, int current)
         {
-            Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
+            Send($"^0={IClient.CC} {current} {Expected} 9999");
         }
 
         /// <inheritdoc/>
@@ -113,14 +111,14 @@ namespace Mockup.Client
         /// <param name="port"></param>
         public void SetHost(string address, int port)
         {
-            ip = address;
-            this.port = port;
+            Ip = address;
+            Port = port;
         }
 
         // here port is used as timeout.
         public bool Connect()
         {
-            fileInterface.Write("Connect method called with IP: " + ip + " and timeout: " + port);
+            fileInterface.Write("Connect method called with IP: " + Ip + " and timeout: " + Port);
             return true;
         }
 
@@ -163,10 +161,12 @@ namespace Mockup.Client
             Send(IClient.RC);
             Thread.Sleep(500);
             Send(job.getJobStartMessage());
-            Send($"{IClient.CC}0" + Constants.vbTab + 3.ToString() + Constants.vbTab + "3999");
+            Send(job.getCounterSetMessage());
             Send(IClient.EQ);
             Thread.Sleep(500);
             Send(IClient.GO);
         }
+        public string Ip { get; set; } = "0.0.0.0";
+        public int Port { get; set; } = 3000;
     }
 }

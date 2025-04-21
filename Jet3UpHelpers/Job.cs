@@ -44,7 +44,13 @@ namespace Helpers
         /// <summary>
         /// Get's the job's inititalizaiton  message.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The exact string that needs to be passe dot the machine.</returns>
         public string getJobStartMessage();
+
+        /// <summary>
+        /// Get the CC command to set expected counter to job.
+        /// </summary>
+        /// <returns>The exact command to be passed to the machine.</returns>
+        public string getCounterSetMessage();
     }
 }
