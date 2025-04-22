@@ -229,8 +229,10 @@ namespace Implementation.Client
         /* inheritdoc */
         public void Disconect()
         {
-            tcpClientStream.Close();
-            client.Close();
+            if(tcpClientStream!=null)
+                tcpClientStream.Close();
+            if(client!=null)
+               client.Close();
         }
 
         /* inheritdoc */
