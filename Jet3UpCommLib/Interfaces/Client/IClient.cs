@@ -1,15 +1,14 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
-using Helpers;
-using Jet3UpHelpers;
+using Jet3UpCommLib.Helpers;
 using System.Net;
 
-namespace Jet3UpInterfaces.Client
+namespace Jet3UpCommLib.Interfaces.Client
 {
     /// <summary>
     /// The service controlling the machine.
     /// </summary>
-    public interface IClient : IDisposable
+    public interface IClient 
     {
         /// <summary>
         /// Reset counter command.
@@ -34,11 +33,8 @@ namespace Jet3UpInterfaces.Client
         /// <summary>
         /// Current counter message.
         /// </summary>
-        protected const string CC = "^0=CC";
-
-        public string Ip { get; set; }
-        public int Port { get; set; }
-
+        protected const string CC = "^0?CC";
+        
         /// <summary>
         /// Safely closes current connection to the printer while ensuring the job stopped.
         /// </summary>
@@ -51,14 +47,6 @@ namespace Jet3UpInterfaces.Client
         /// <param name="port"></param>
         /// <returns></returns>
         public bool Connect(string Ip, int port);
-
-        /// <summary>
-        /// Sets up a new host.
-        /// </summary>
-        /// <param name="address">The adress where we want to connect to.</param>
-        /// <param name="port">The port of the desired machine.</param>
-        /// <returns></returns>
-        internal void SetHost(string address, int port);
 
         /// <summary>
         /// Establishes communication to the already set host.
@@ -139,10 +127,8 @@ namespace Jet3UpInterfaces.Client
 
         public string GetName();
 
-<<<<<<< Updated upstream
-        public void StartJob();
-=======
         public IPEndPoint GetAddress();
->>>>>>> Stashed changes
+
+        public void SendJobToMachine();
     }
 }

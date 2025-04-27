@@ -1,39 +1,39 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
 
-using Helpers;
-using Helpers.Jobs;
-using Jet3UpHelpers;
-using Jet3UpHelpers.Factories;
-using Jet3UpHelpers.Resources;
-using Jet3UpInterfaces.Client;
+using Jet3UpCommLib.Helpers;
+using Jet3UpCommLib.Helpers.Jobs;
+using Jet3UpCommLib.Helpers.Resources;
+using Jet3UpCommLib.Interfaces.Client;
 using Microsoft.VisualBasic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Implementation.Client
+namespace Jet3UpCommLib.Implementation.Client
 {
     /// <summary>
     /// This implementation needs a machine to connect to in order to work. 
     /// <inheritdoc cref="IClient"/>
     /// </summary>
-    public class Jet3upTCPClient : IClient
+    internal class Jet3upTCPClient : InternalClient, IDisposable
     {
-        private IPEndPoint target = IPEndPoint.Parse("0.0.0.0:8080");
+        private IPEndPoint target = IPEndPoint.Parse("0.0.0.0:8000");
         private string name = "Printer";
         private int expectedQuantity = 0;
-        private TcpClient client;
-        private Stream tcpClientStream;
+        private TcpClient? client;
+        private Stream? tcpClientStream;
         // CancellationTokenSource to allow task cancellation
         private CancellationTokenSource? cancellationTokenSource;
-        public event EventHandler<Jet3UpMessageHendlerEventArgs> Jet3UpMessageHendler;
-        public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs> Jet3UpCommunicationInterrupted;
+        public event EventHandler<Jet3UpMessageHendlerEventArgs>? Jet3UpMessageHendler;
+        public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs>? Jet3UpCommunicationInterrupted;
+        private Job? job;
 
         /// <inheritdoc/>
         public bool Connect(string Ip, int port)
         {
-            SetHost(Ip, port);
+            
+            ((InternalClient)this).SetHost(Ip, port);
             return Connect();
         }
 
@@ -52,7 +52,8 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public void Send(string text)
         {
-
+            if (client == null)
+                return;
             if (IsConnected())
             {
                 byte[] SENDBYTES = Encoding.ASCII.GetBytes(text + Constants.vbCrLf);
@@ -178,6 +179,8 @@ namespace Implementation.Client
         {
             int bytesRead;
             Send(IClient.CC);
+            if (client == null || tcpClientStream == null)
+                return -1;
             lock (client)
             {
                 bytesRead = tcpClientStream.Read(buffer, 0, buffer.Length);
@@ -192,27 +195,9 @@ namespace Implementation.Client
             Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
         }
 
-        public void SetHost(string address, int port)
-        {
-            if (IsConnected())
-            {
-                StopCommand();
-            }
-<<<<<<< Updated upstream
-            Ip = address;
-            Port = port;
-=======
-            target = IPEndPoint.Parse(address + ":" + port.ToString());
->>>>>>> Stashed changes
-        }
-
         public bool Connect()
         {
-<<<<<<< Updated upstream
-            client = new TcpClient(Ip, Port);
-=======
-            client = new TcpClient(target);
->>>>>>> Stashed changes
+            client = new TcpClient(target.Address.ToString(),target.Port);
             tcpClientStream = client.GetStream();
             tcpClientStream.ReadTimeout = 2000;
             return tcpClientStream.CanRead && tcpClientStream.CanWrite;
@@ -225,24 +210,13 @@ namespace Implementation.Client
 
         public string GetName() => name;
 
-        public override bool Equals(object? obj)
-        {
-            if(obj is Jet3upTCPClient)
-            {
-                return name == ((Jet3upTCPClient)obj).GetName();
-            }
-            return false;
-        }
-
-        private Job job;
-
         /* inheritdoc */
         public void Disconect()
         {
-            if(tcpClientStream!=null)
-                tcpClientStream.Close();
-            if(client!=null)
-               client.Close();
+            if (client == null || tcpClientStream == null)
+                return;
+            tcpClientStream.Close();
+            client.Close();
         }
 
         /* inheritdoc */
@@ -252,31 +226,42 @@ namespace Implementation.Client
 
         }
 
-        public void StartJob()
+        /* inheritdoc */
+        public void SendJobToMachine()
         {
-            
+            if (job == null)
+                return;
             Send(IClient.RC);
-            
-           
             Thread.Sleep(500);
-            Send(job.getJobStartMessage());
-            Send(job.getCounterSetMessage());
+            Send(job!.getJobStartMessage());
+            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
             Send(IClient.EQ);
             Thread.Sleep(500);
             Send(IClient.GO);
-            
 
-            //StartListening();
+            StartListening();
         }
 
-<<<<<<< Updated upstream
-        public string Ip { get; set; } = "0.0.0.0";
-        public int Port { get; set; } = 3000;
-=======
+        /* inheritdoc */
         public IPEndPoint GetAddress()
         {
             return target;
         }
->>>>>>> Stashed changes
+
+        /* inheritdoc */
+        void InternalClient.SetHost(string address, int port)
+        {
+            if (IsConnected())
+            {
+                StopCommand();
+            }
+            target = IPEndPoint.Parse(address + ":" + port.ToString());
+        }
+
+        public void Dispose()
+        {
+            tcpClientStream?.Dispose();
+            client?.Close();
+        }
     }
 }

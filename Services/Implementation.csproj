@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
-    <ProjectReference Include="..\Data\Data.csproj" />
-    <ProjectReference Include="..\Jet3UpHelpers\Helpers.csproj" />
   </ItemGroup>
 
 </Project>

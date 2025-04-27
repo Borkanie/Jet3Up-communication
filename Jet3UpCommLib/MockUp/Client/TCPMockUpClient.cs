@@ -1,26 +1,22 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
 
-using Helpers;
-using Helpers.Jobs;
-using Jet3UpHelpers;
-using Jet3UpHelpers.Resources;
-using Jet3UpInterfaces.Client;
+using Jet3UpCommLib.Helpers;
+using Jet3UpCommLib.Helpers.Jobs;
+using Jet3UpCommLib.Helpers.Resources;
+using Jet3UpCommLib.Interfaces.Client;
 using Microsoft.VisualBasic;
 using System.Net;
 
-namespace Mockup.Client
+namespace Jet3UpCommLib.MockUp.Client
 {
     /// <inheritdoc/>
-    public class TCPMockUpClient : IClient
+    public class TCPMockUpClient : InternalClient
     {
-<<<<<<< Updated upstream
-=======
         protected IPEndPoint target = IPEndPoint.Parse("127.0.0.1:3000");
->>>>>>> Stashed changes
         private FileInterface fileInterface;
-        public event EventHandler<Jet3UpMessageHendlerEventArgs> Jet3UpMessageHendler;
-        public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs> Jet3UpCommunicationInterrupted;
+        public event EventHandler<Jet3UpMessageHendlerEventArgs>? Jet3UpMessageHendler;
+        public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs>? Jet3UpCommunicationInterrupted;
 
         /// <inheritdoc/>
         public TCPMockUpClient()
@@ -49,7 +45,7 @@ namespace Mockup.Client
         /// <inheritdoc/>
         public bool Connect(string Ip, int port)
         {
-            SetHost(Ip,port);
+            ((InternalClient)this).SetHost(Ip,port);
             return Connect();
         }
 
@@ -100,7 +96,7 @@ namespace Mockup.Client
         /// <inheritdoc/>
         public void SetCount(int Expected, int current)
         {
-            Send($"^0={IClient.CC} {current} {Expected} 9999");
+            Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
         }
 
         /// <inheritdoc/>
@@ -114,28 +110,19 @@ namespace Mockup.Client
         /// </summary>
         /// <param name="address"></param>
         /// <param name="port"></param>
-        public void SetHost(string address, int port)
+        void InternalClient.SetHost(string address, int port)
         {
-<<<<<<< Updated upstream
-            Ip = address;
-            Port = port;
-=======
             target = IPEndPoint.Parse(address + ":" + port);
->>>>>>> Stashed changes
         }
 
         // here port is used as timeout.
         public bool Connect()
         {
-<<<<<<< Updated upstream
-            fileInterface.Write("Connect method called with IP: " + Ip + " and timeout: " + Port);
-=======
             fileInterface.Write("Connect method called with IP: " + target.Address + " and timeout: " + target.Port);
->>>>>>> Stashed changes
             return true;
         }
 
-        private string name;
+        private string name = "";
 
         public void SetName(string name)
         {
@@ -147,16 +134,7 @@ namespace Mockup.Client
             return name;
         }
 
-        public override bool Equals(object? obj)
-        {
-            if (obj is TCPMockUpClient)
-            {
-                return name == ((TCPMockUpClient)obj).GetName();
-            }
-            return false;
-        }
-
-        private Job job;
+        private Job? job;
 
         public void Disconect()
         {
@@ -168,25 +146,22 @@ namespace Mockup.Client
             this.job = job;
         }
 
-<<<<<<< Updated upstream
-        public void StartJob()
-        {
-
-            Send(IClient.RC);
-            Thread.Sleep(500);
-            Send(job.getJobStartMessage());
-            Send(job.getCounterSetMessage());
-            Send(IClient.EQ);
-            Thread.Sleep(500);
-            Send(IClient.GO);
-        }
-        public string Ip { get; set; } = "0.0.0.0";
-        public int Port { get; set; } = 3000;
-=======
         public IPEndPoint GetAddress()
         {
             return target;
         }
->>>>>>> Stashed changes
+
+        public void SendJobToMachine()
+        {
+            if (job == null)
+                return;
+            Send(IClient.RC);
+            Thread.Sleep(500);
+            Send(job!.getJobStartMessage());
+            Send($"{IClient.CC}0" + Constants.vbTab + 100.ToString() + Constants.vbTab + "3999");
+            Send(IClient.EQ);
+            Thread.Sleep(500);
+            Send(IClient.GO);
+        }
     }
 }

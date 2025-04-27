@@ -1,7 +1,7 @@
-﻿using Jet3UpInterfaces.Client;
+﻿using Jet3UpCommLib.Interfaces.Client;
 using System.Net;
 
-namespace Interfaces.Factories
+namespace Jet3UpCommLib.Interfaces.Factories
 {
     public interface IClientFactory
     {
@@ -12,7 +12,7 @@ namespace Interfaces.Factories
         /// <param name="port"></param>
         /// <param name="name"></param>
         /// <returns>The new object or null.</returns>
-        public IClient? createClient(string address, int port, string name);
+        public IClient? CreateClient(string address, int port, string name);
 
         /// <summary>
         /// Changes adress assiigned to a client.
@@ -28,10 +28,12 @@ namespace Interfaces.Factories
         /// </summary>
         /// <param name="endpoint"></param>
         /// <returns></returns>
-        protected bool isAdressNotInUse(IPEndPoint endpoint);
+        public bool isAdressInUse(IPEndPoint endpoint);
 
 
-        public bool RemoveClient(IClient client);
+        public bool Remove(IClient client);
+
+        public IClient CreateClient();
     }
 
 }
