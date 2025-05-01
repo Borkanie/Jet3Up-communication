@@ -1,7 +1,7 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
 
-using Aerotec.Data.Model;
+using Jet3UpCommLib.Model;
 
 namespace Jet3UpCommLib.Interfaces.Factories
 {

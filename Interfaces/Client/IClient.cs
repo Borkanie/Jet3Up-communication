@@ -139,10 +139,7 @@ namespace Jet3UpInterfaces.Client
 
         public string GetName();
 
-<<<<<<< Updated upstream
         public void StartJob();
-=======
         public IPEndPoint GetAddress();
->>>>>>> Stashed changes
     }
 }

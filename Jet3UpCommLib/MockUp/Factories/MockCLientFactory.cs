@@ -1,11 +1,6 @@
-﻿using Jet3UpCommLib.Interfaces.Factories;
-using Jet3UpCommLib.Interfaces.Client;
+﻿using Jet3UpCommLib.Interfaces.Client;
+using Jet3UpCommLib.Interfaces.Factories;
 using Jet3UpCommLib.MockUp.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 
 namespace Jet3UpCommLib.MockUp.Factories

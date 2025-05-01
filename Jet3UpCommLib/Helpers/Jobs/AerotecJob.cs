@@ -16,14 +16,14 @@ namespace Jet3UpCommLib.Helpers.Jobs
     /// </summary>
     public class AerotecJob : Job
     {
-        public AerotecJob(string HTZ, string signature, string ANR, string BTIDX, string controllerId, string? anzahl = null) 
+        public AerotecJob(string HTZ, string signature, string ANR, string BTIDX, string controllerId, string? anzahl = null)
         {
             AerotecObjects.Add(Keys.HTZ, HTZ);
             AerotecObjects.Add(Keys.Signature, signature);
             AerotecObjects.Add(Keys.ANR, ANR);
             AerotecObjects.Add(Keys.BTIDX, BTIDX);
             AerotecObjects.Add(Keys.ControllerId, controllerId);
-            if(anzahl!= null)
+            if (anzahl != null)
             {
                 AerotecObjects.Add(Keys.Anzahl, anzahl);
             }
@@ -115,21 +115,21 @@ namespace Jet3UpCommLib.Helpers.Jobs
             {
 
                 case FontSizeEnum.ISO1_5x3:
-                    return  $"^0*OBJ [1 {location[0]} 11 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
+                    return $"^0*OBJ [1 {location[0]} 11 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [2 {location[1]} 11 0 (ISO1_7x5)  ({AerotecObjects[Keys.Signature]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [3 {location[2]} 0 0 (ISO1_7x5)  ({AerotecObjects[Keys.ANR]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [4 {location[3]} 0 0 (ISO1_7x5)  ({AerotecObjects[Keys.BTIDX]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [5 {location[4]} 0 0 (ISO1_7x5)  ({AerotecObjects[Keys.ControllerId]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf;
 
                 case FontSizeEnum.ISO1_7x5:
-                    return  $"^0*OBJ [1 {location[0]} 13 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
+                    return $"^0*OBJ [1 {location[0]} 13 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [2 {location[1]} 13 0 (ISO1_7x5)  ({AerotecObjects[Keys.Signature]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [3 {location[2]} 0 0 (ISO1_7x5)  ({AerotecObjects[Keys.ANR]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [4 {location[3]} 0 0 (ISO1_7x5)  ({AerotecObjects[Keys.BTIDX]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [5 {location[4]} 0 0 (ISO1_7x5)  ({AerotecObjects[Keys.ControllerId]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf;
 
                 case FontSizeEnum.ISO1_9x7:
-                    return  $"^0*OBJ [1 {location[0]} 16 0 (ISO1_9x7)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
+                    return $"^0*OBJ [1 {location[0]} 16 0 (ISO1_9x7)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [2 {location[1]} 16 0 (ISO1_9x7)  ({AerotecObjects[Keys.Signature]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [3 {location[2]} 0 0 (ISO1_9x7)  ({AerotecObjects[Keys.ANR]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
                             + $"^0*OBJ [4 {location[3]} 0 0 (ISO1_9x7)  ({AerotecObjects[Keys.BTIDX]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 ()]" + Constants.vbCrLf
@@ -157,14 +157,14 @@ namespace Jet3UpCommLib.Helpers.Jobs
             switch (FontSize)
             {
                 case FontSizeEnum.ISO1_5x3:
-                    return  $"^0*OBJ [1 {location[0]} 22 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
+                    return $"^0*OBJ [1 {location[0]} 22 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [2 {location[1]} 22 0 (ISO1_7x5)  ({AerotecObjects[Keys.Signature]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [3 {location[2]} 11 0 (ISO1_7x5)  ({AerotecObjects[Keys.ANR]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [4 {location[3]} 11 0 (ISO1_7x5)  ({AerotecObjects[Keys.BTIDX]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [5 {location[4]} 11 0 (ISO1_7x5)  ({AerotecObjects[Keys.ControllerId]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [6 0 0 0 (ISO1_7x5)  ({final}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf;
                 case FontSizeEnum.ISO1_7x5:
-                    return  $"^0*OBJ [1 {location[0]} 24 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
+                    return $"^0*OBJ [1 {location[0]} 24 0 (ISO1_7x5)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [2 {location[1]} 24 0 (ISO1_7x5)  ({AerotecObjects[Keys.Signature]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [3 {location[2]} 12 0 (ISO1_7x5)  ({AerotecObjects[Keys.ANR]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [4 {location[3]} 12 0 (ISO1_7x5)  ({AerotecObjects[Keys.BTIDX]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
@@ -173,7 +173,7 @@ namespace Jet3UpCommLib.Helpers.Jobs
 
 
                 case FontSizeEnum.ISO1_9x7:
-                    return  $"^0*OBJ [1 {location[0]} 32 0 (ISO1_9x7)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
+                    return $"^0*OBJ [1 {location[0]} 32 0 (ISO1_9x7)  ({AerotecObjects[Keys.HTZ]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [2 {location[1]} 32 0 (ISO1_9x7)  ({AerotecObjects[Keys.Signature]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [3 {location[2]} 16 0 (ISO1_9x7)  ({AerotecObjects[Keys.ANR]}) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
                             + $"^0*OBJ [4 {location[3]} 16 0 (ISO1_9x7)  ({AerotecObjects[Keys.BTIDX]} ) 1 0 0 0 0 {bold} 0 0 0 0 ()  () 0 0 () ]" + Constants.vbCrLf
@@ -184,7 +184,7 @@ namespace Jet3UpCommLib.Helpers.Jobs
 
                     return "";
             }
-           
+
         }
         /// <summary>
         /// Sets up location for the machine dependeing of the Ink color and expected machine type.

@@ -8,13 +8,13 @@ namespace Jet3UpCommLib.Interfaces.Client
     /// <summary>
     /// The service controlling the machine.
     /// </summary>
-    public interface IClient 
+    public interface IClient
     {
         /// <summary>
         /// Reset counter command.
         /// </summary>
         protected const string RC = "^0!RC";
-        
+
         /// <summary>
         /// Start job message that needs to be send to machine to start printing.
         /// </summary>
@@ -29,12 +29,12 @@ namespace Jet3UpCommLib.Interfaces.Client
         /// Message that needs to be send to machine at the end of a job script.
         /// </summary>
         protected const string EQ = "^0!EQ";
-        
+
         /// <summary>
         /// Current counter message.
         /// </summary>
         protected const string CC = "^0?CC";
-        
+
         /// <summary>
         /// Safely closes current connection to the printer while ensuring the job stopped.
         /// </summary>
@@ -83,7 +83,7 @@ namespace Jet3UpCommLib.Interfaces.Client
         /// <param name="anzahl">Final message string.
         /// If it's NOT NULL the message will be considered final message and standard size will be written for black machine.
         /// Client specified this configuration.</param>
-        public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,            
+        public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
             string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,
             int encoderResolution, string? anzahl);
 

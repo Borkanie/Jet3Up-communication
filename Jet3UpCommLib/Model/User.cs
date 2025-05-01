@@ -1,7 +1,7 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
 
-namespace Aerotec.Data.Model
+namespace Jet3UpCommLib.Model
 {
     /// <summary>
     /// A controller maning a machine.

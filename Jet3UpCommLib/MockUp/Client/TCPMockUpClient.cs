@@ -45,7 +45,7 @@ namespace Jet3UpCommLib.MockUp.Client
         /// <inheritdoc/>
         public bool Connect(string Ip, int port)
         {
-            ((InternalClient)this).SetHost(Ip,port);
+            ((InternalClient)this).SetHost(Ip, port);
             return Connect();
         }
 
@@ -102,7 +102,7 @@ namespace Jet3UpCommLib.MockUp.Client
         /// <inheritdoc/>
         public void StopListening()
         {
-           
+
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Jet3UpCommLib.MockUp.Client
 
         public void Disconect()
         {
-            
+
         }
 
         public void LoadJob(Job job)

@@ -198,21 +198,12 @@ namespace Implementation.Client
             {
                 StopCommand();
             }
-<<<<<<< Updated upstream
-            Ip = address;
-            Port = port;
-=======
             target = IPEndPoint.Parse(address + ":" + port.ToString());
->>>>>>> Stashed changes
         }
 
         public bool Connect()
         {
-<<<<<<< Updated upstream
-            client = new TcpClient(Ip, Port);
-=======
             client = new TcpClient(target);
->>>>>>> Stashed changes
             tcpClientStream = client.GetStream();
             tcpClientStream.ReadTimeout = 2000;
             return tcpClientStream.CanRead && tcpClientStream.CanWrite;
@@ -269,14 +260,9 @@ namespace Implementation.Client
             //StartListening();
         }
 
-<<<<<<< Updated upstream
-        public string Ip { get; set; } = "0.0.0.0";
-        public int Port { get; set; } = 3000;
-=======
         public IPEndPoint GetAddress()
         {
             return target;
         }
->>>>>>> Stashed changes
     }
 }

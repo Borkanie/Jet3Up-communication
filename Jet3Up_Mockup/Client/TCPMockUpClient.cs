@@ -14,10 +14,7 @@ namespace Mockup.Client
     /// <inheritdoc/>
     public class TCPMockUpClient : IClient
     {
-<<<<<<< Updated upstream
-=======
         protected IPEndPoint target = IPEndPoint.Parse("127.0.0.1:3000");
->>>>>>> Stashed changes
         private FileInterface fileInterface;
         public event EventHandler<Jet3UpMessageHendlerEventArgs> Jet3UpMessageHendler;
         public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs> Jet3UpCommunicationInterrupted;
@@ -116,22 +113,13 @@ namespace Mockup.Client
         /// <param name="port"></param>
         public void SetHost(string address, int port)
         {
-<<<<<<< Updated upstream
-            Ip = address;
-            Port = port;
-=======
             target = IPEndPoint.Parse(address + ":" + port);
->>>>>>> Stashed changes
         }
 
         // here port is used as timeout.
         public bool Connect()
         {
-<<<<<<< Updated upstream
-            fileInterface.Write("Connect method called with IP: " + Ip + " and timeout: " + Port);
-=======
             fileInterface.Write("Connect method called with IP: " + target.Address + " and timeout: " + target.Port);
->>>>>>> Stashed changes
             return true;
         }
 
@@ -168,7 +156,6 @@ namespace Mockup.Client
             this.job = job;
         }
 
-<<<<<<< Updated upstream
         public void StartJob()
         {
 
@@ -180,13 +167,10 @@ namespace Mockup.Client
             Thread.Sleep(500);
             Send(IClient.GO);
         }
-        public string Ip { get; set; } = "0.0.0.0";
-        public int Port { get; set; } = 3000;
-=======
+
         public IPEndPoint GetAddress()
         {
             return target;
         }
->>>>>>> Stashed changes
     }
 }

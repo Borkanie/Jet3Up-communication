@@ -1,8 +1,8 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
 
-using Aerotec.Data.Model;
 using Jet3UpCommLib.Interfaces.Factories;
+using Jet3UpCommLib.Model;
 using Newtonsoft.Json;
 
 namespace Jet3UpCommLib.Implementation.Factories
@@ -38,17 +38,17 @@ namespace Jet3UpCommLib.Implementation.Factories
         {
             try
             {
-                users.Remove(user);
+                _ = users.Remove(user);
                 string jsonFilePath = getUserDataFilePath();
                 string json = File.ReadAllText(jsonFilePath);
                 var currentUserBase = JsonConvert.DeserializeObject<List<User>>(json);
 
                 if (currentUserBase != null && currentUserBase.Contains(user))
                 {
-                    currentUserBase.Remove(user);
+                    _ = currentUserBase.Remove(user);
                     string serializedJson = JsonConvert.SerializeObject(currentUserBase, Formatting.Indented);
                     File.WriteAllText(jsonFilePath, serializedJson);
-                    users.Remove(user);
+                    _ = users.Remove(user);
                 }
             }
             catch (IOException ex)
@@ -125,7 +125,7 @@ namespace Jet3UpCommLib.Implementation.Factories
 
             if (!File.Exists(jsonFilePath))
             {
-                File.Create(jsonFilePath);
+                _ = File.Create(jsonFilePath);
             }
 
             return jsonFilePath;

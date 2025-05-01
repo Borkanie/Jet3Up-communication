@@ -2,16 +2,13 @@
 // All Rigths reserved.
 
 
-using Aerotec.Data.Model;
-using Jet3UpCommLib.Implementation.Factories;
 using Jet3UpCommLib.Interfaces.Factories;
 using Jet3UpCommLib.MockUp.Factories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Mockup.Factories;
 
 
-namespace IoC
+namespace Jet3UpCommLib
 {
     public class IoCContainer
     {

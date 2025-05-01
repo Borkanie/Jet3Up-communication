@@ -1,16 +1,14 @@
 ﻿using Jet3UpCommLib.Implementation.Client;
-using Jet3UpCommLib.Interfaces.Factories;
 using Jet3UpCommLib.Interfaces.Client;
+using Jet3UpCommLib.Interfaces.Factories;
 using System.Net;
-using IoC;
-using System.Xml.Linq;
 
 namespace Jet3UpCommLib.Implementation.Factories
 {
     public class ClientFactory : IClientFactory
     {
 
-        private List<IClient> clients = new List<IClient>();
+        private List<IClient> clients = new();
 
         public bool Remove(IClient client)
         {
@@ -22,7 +20,7 @@ namespace Jet3UpCommLib.Implementation.Factories
                     client.StopListening();
                     client.Disconect();
                 }
-                clients.Remove(client);
+                _ = clients.Remove(client);
                 return true;
             }
             catch (Exception ex)
@@ -51,10 +49,10 @@ namespace Jet3UpCommLib.Implementation.Factories
         {
             var endpoint = IPEndPoint.Parse(address);
             endpoint.Port = port;
-            
+
             if (!isAdressInUse(endpoint))
             {
-                Jet3upTCPClient client = new Jet3upTCPClient();
+                Jet3upTCPClient client = new();
                 ((InternalClient)client).SetHost(address, port);
                 client.SetName(name);
                 clients.Add(client);
@@ -62,28 +60,28 @@ namespace Jet3UpCommLib.Implementation.Factories
             }
             else
             {
-                return null; 
+                return null;
             }
         }
 
         public bool isAdressInUse(IPEndPoint endpoint)
         {
-            foreach(var client in clients)
+            foreach (var client in clients)
             {
                 if (client.GetAddress().Address == endpoint.Address && client.GetAddress().Port == endpoint.Port)
                     return true;
             }
 
             return false;
-            
+
         }
 
         public IClient CreateClient()
-        {   
+        {
             var adress = GetNextAvailableAddress();
             return CreateClient(adress.Item1, adress.Item2, "Imprimanta")!;
         }
-        
+
         private Tuple<string, int> GetNextAvailableAddress(string baseIp = "127.0.0.1", int startingPort = 5000, int maxPort = 10000)
         {
             for (int port = startingPort; port <= maxPort; port++)

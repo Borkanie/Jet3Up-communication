@@ -26,7 +26,7 @@ namespace Jet3UpCommLib.Helpers.Factories
         /// <returns>An instance of a <see cref="Jet3UpMessageBuilder"/>.</returns>
         public static Jet3UpMessageBuilder Start()
         {
-            if(instance == null)
+            if (instance == null)
                 instance = new Jet3UpMessageBuilder();
             return instance;
         }

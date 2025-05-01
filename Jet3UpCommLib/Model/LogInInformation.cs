@@ -3,7 +3,7 @@
 
 using System.Net;
 
-namespace Aerotec.Data.Model
+namespace Jet3UpCommLib.Model
 {
     /// <summary>
     /// Information used to log in to the device.

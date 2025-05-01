@@ -1,21 +1,21 @@
 ﻿// Copyrigth (c) S.C.SoftLab S.R.L.
 // All Rigths reserved.
 
-using Aerotec.Data.Model;
 using Jet3UpCommLib.Interfaces.Factories;
+using Jet3UpCommLib.Model;
 
-namespace Mockup.Factories
+namespace Jet3UpCommLib.MockUp.Factories
 {
     /// <inheritdoc/>
     public class UserFactoryMockup : IUserFactory
     {
-        private List<User> DefaultUsers = new List<User>(){
+        private List<User> DefaultUsers = new(){
         new User(){ Name = "1" , Id = "1"},
         new User(){ Name = "2", Id = "2" },
         new User(){ Name = "3", Id = "3" },
         new User(){ Name = "4", Id = "4" }
         };
-        private List<User> users = new List<User>();
+        private List<User> users = new();
 
         public UserFactoryMockup()
         {
@@ -41,10 +41,10 @@ namespace Mockup.Factories
         /// <inheritdoc/>
         public void Destroy(User user)
         {
-            users.Remove(user);
+            _ = users.Remove(user);
             if (DefaultUsers.Contains(user))
             {
-                DefaultUsers.Remove(user);
+                _ = DefaultUsers.Remove(user);
             }
         }
 

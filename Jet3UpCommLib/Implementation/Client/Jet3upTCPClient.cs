@@ -32,7 +32,7 @@ namespace Jet3UpCommLib.Implementation.Client
         /// <inheritdoc/>
         public bool Connect(string Ip, int port)
         {
-            
+
             ((InternalClient)this).SetHost(Ip, port);
             return Connect();
         }
@@ -197,7 +197,7 @@ namespace Jet3UpCommLib.Implementation.Client
 
         public bool Connect()
         {
-            client = new TcpClient(target.Address.ToString(),target.Port);
+            client = new TcpClient(target.Address.ToString(), target.Port);
             tcpClientStream = client.GetStream();
             tcpClientStream.ReadTimeout = 2000;
             return tcpClientStream.CanRead && tcpClientStream.CanWrite;
