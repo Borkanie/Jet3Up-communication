@@ -2,6 +2,7 @@
 using Jet3UpCommLib.Interfaces.Client;
 using Jet3UpCommLib.Interfaces.Factories;
 using System.Net;
+using System.Xml.Linq;
 
 namespace Jet3UpCommLib.Implementation.Factories
 {
@@ -52,8 +53,7 @@ namespace Jet3UpCommLib.Implementation.Factories
 
             if (!isAdressInUse(endpoint))
             {
-                Jet3upTCPClient client = new();
-                ((InternalClient)client).SetHost(address, port);
+                Jet3upTCPClient client = new Jet3upTCPClient(address, port);
                 client.SetName(name);
                 clients.Add(client);
                 return client;
@@ -68,10 +68,9 @@ namespace Jet3UpCommLib.Implementation.Factories
         {
             foreach (var client in clients)
             {
-                if (client.GetAddress().Address == endpoint.Address && client.GetAddress().Port == endpoint.Port)
+                if (client.GetAddress().Address.ToString() == endpoint.Address.ToString() && client.GetAddress().Port == endpoint.Port)
                     return true;
             }
-
             return false;
 
         }
@@ -79,7 +78,10 @@ namespace Jet3UpCommLib.Implementation.Factories
         public IClient CreateClient()
         {
             var adress = GetNextAvailableAddress();
-            return CreateClient(adress.Item1, adress.Item2, "Imprimanta")!;
+            Jet3upTCPClient client = new Jet3upTCPClient(adress.Item1, adress.Item2);
+            client.SetName("Imprimanta");
+            clients.Add(client);
+            return client;
         }
 
         private Tuple<string, int> GetNextAvailableAddress(string baseIp = "127.0.0.1", int startingPort = 5000, int maxPort = 10000)

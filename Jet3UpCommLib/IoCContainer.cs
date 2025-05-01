@@ -2,6 +2,7 @@
 // All Rigths reserved.
 
 
+using Jet3UpCommLib.Implementation.Factories;
 using Jet3UpCommLib.Interfaces.Factories;
 using Jet3UpCommLib.MockUp.Factories;
 using Microsoft.Extensions.DependencyInjection;

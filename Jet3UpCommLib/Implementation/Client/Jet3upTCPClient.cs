@@ -29,6 +29,21 @@ namespace Jet3UpCommLib.Implementation.Client
         public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs>? Jet3UpCommunicationInterrupted;
         private Job? job;
 
+        public Jet3upTCPClient()
+        {
+            
+        }
+
+        public Jet3upTCPClient(IPEndPoint endPoint)
+        {
+            target = endPoint;
+        }
+
+        public Jet3upTCPClient(string Ip, int port)
+        {
+          target = new IPEndPoint(IPAddress.Parse(Ip),port);
+        }
+
         /// <inheritdoc/>
         public bool Connect(string Ip, int port)
         {
