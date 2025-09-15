@@ -14,7 +14,6 @@ namespace Mockup.Client
     /// <inheritdoc/>
     public class TCPMockUpClient : IClient
     {
-        protected IPEndPoint target = IPEndPoint.Parse("127.0.0.1:3000");
         private FileInterface fileInterface;
         public event EventHandler<Jet3UpMessageHendlerEventArgs> Jet3UpMessageHendler;
         public event EventHandler<Jet3UpCommunicationInterruptedErrorEventArgs> Jet3UpCommunicationInterrupted;
@@ -113,13 +112,17 @@ namespace Mockup.Client
         /// <param name="port"></param>
         public void SetHost(string address, int port)
         {
-            target = IPEndPoint.Parse(address + ":" + port);
+            Ip = address;
+            Port = port;
         }
+
+        public string Ip { get; set; } = "127.0.0.1";
+        public int Port { get; set; } = 3000;
 
         // here port is used as timeout.
         public bool Connect()
         {
-            fileInterface.Write("Connect method called with IP: " + target.Address + " and timeout: " + target.Port);
+            fileInterface.Write("Connect method called with IP: " + Ip + " and port: " + Port);
             return true;
         }
 
@@ -170,7 +173,15 @@ namespace Mockup.Client
 
         public IPEndPoint GetAddress()
         {
-            return target;
+            return new IPEndPoint(IPAddress.Parse(Ip), Port);
+        }
+
+        public void Dispose()
+        {
+            if (IsConnected())
+            {
+                Disconect();
+            }
         }
     }
 }

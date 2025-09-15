@@ -20,7 +20,7 @@ namespace Implementation.Client
     /// </summary>
     public class Jet3upTCPClient : IClient
     {
-        private IPEndPoint target = IPEndPoint.Parse("0.0.0.0:8080");
+        private const string ipStringDefault = "0.0.0.0";
         private string name = "Printer";
         private int expectedQuantity = 0;
         private TcpClient client;
@@ -198,12 +198,13 @@ namespace Implementation.Client
             {
                 StopCommand();
             }
-            target = IPEndPoint.Parse(address + ":" + port.ToString());
+            Ip = address;
+            Port = port;
         }
 
         public bool Connect()
         {
-            client = new TcpClient(target);
+            client = new TcpClient(GetAddress());
             tcpClientStream = client.GetStream();
             tcpClientStream.ReadTimeout = 2000;
             return tcpClientStream.CanRead && tcpClientStream.CanWrite;
@@ -226,6 +227,9 @@ namespace Implementation.Client
         }
 
         private Job job;
+
+        public string Ip { get; set; } = ipStringDefault;
+        public int Port { get; set; } = 8080;
 
         /* inheritdoc */
         public void Disconect()
@@ -262,7 +266,17 @@ namespace Implementation.Client
 
         public IPEndPoint GetAddress()
         {
-            return target;
+            var address = IPAddress.Parse(ipStringDefault);
+            if (!IPAddress.TryParse(Ip,out address))
+            {
+                Console.WriteLine($"Cannot parse address:{Ip}");
+            }
+            return new IPEndPoint(address!, 8080);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

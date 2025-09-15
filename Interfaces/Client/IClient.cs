@@ -58,7 +58,7 @@ namespace Jet3UpInterfaces.Client
         /// <param name="address">The adress where we want to connect to.</param>
         /// <param name="port">The port of the desired machine.</param>
         /// <returns></returns>
-        internal void SetHost(string address, int port);
+        public void SetHost(string address, int port);
 
         /// <summary>
         /// Establishes communication to the already set host.
