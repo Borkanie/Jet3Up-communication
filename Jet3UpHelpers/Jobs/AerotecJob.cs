@@ -42,7 +42,7 @@ namespace Helpers.Jobs
         public int Rotation { get; set; }
 
         /*inheritdoc*/
-        public int EncoderResolution { get; set; }
+        public int EncoderResolution { get; set; } = 30;
 
         /*inheritdoc*/
         public int ExpectedQuantity { get; set; }
@@ -202,11 +202,11 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 107, 0, 70, 98 };
+                            return new int[] { 0, 117, 0, 70, 117 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 172, 0, 114, 158 };
+                            return new int[] { 0, 182, 0, 110, 182 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 242, 0, 162, 222 };
+                            return new int[] { 0, 262, 0, 160, 262 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }
@@ -215,11 +215,11 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 92, 0, 60, 80 };
+                            return new int[] { 0, 102, 0, 60, 102 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 92, 0, 60, 82 };
+                            return new int[] { 0, 102, 0, 60, 102 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 128, 0, 84, 120 };
+                            return new int[] { 0, 142, 0, 82, 142 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }

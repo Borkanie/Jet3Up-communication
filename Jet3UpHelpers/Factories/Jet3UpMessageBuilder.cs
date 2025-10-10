@@ -47,11 +47,11 @@ namespace Jet3UpHelpers.Factories
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 107, 0, 70, 98 };
+                            return new int[] { 0, 107, 0, 75, 98 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 172, 0, 114, 158 };
+                            return new int[] { 0, 172, 0, 124, 158 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 242, 0, 162, 222 };
+                            return new int[] { 0, 242, 0, 170, 222 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }
@@ -60,11 +60,11 @@ namespace Jet3UpHelpers.Factories
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 92, 0, 60, 80 };
+                            return new int[] { 0, 92, 0, 65, 80 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 92, 0, 60, 82 };
+                            return new int[] { 0, 92, 0, 65, 82 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 128, 0, 84, 120 };
+                            return new int[] { 0, 128, 0, 88, 120 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }

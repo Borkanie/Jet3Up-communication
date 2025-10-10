@@ -43,7 +43,7 @@ namespace Mockup.Factories
             return client;
         }
 
-        bool IClientFactory.isAdressNotInUse(IPEndPoint endpoint)
+        bool IClientFactory.isAdressInUse(IPEndPoint endpoint)
         {
             return true;
         }

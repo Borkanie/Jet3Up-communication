@@ -80,7 +80,9 @@ namespace Implementation.Client
             Send(IClient.RC);
 
             var job = new AerotecJob(HTZ, signature, ANR, BTIDX, controllerId, anzahl);
-
+            job.EncoderResolution = encoderResolution;
+            job.Rotation = rotation;
+            job.Delay = delay;
             Thread.Sleep(500);
             Send(job.getJobStartMessage());
             Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
@@ -123,7 +125,7 @@ namespace Implementation.Client
         private void ListenForResponses(CancellationToken cancellationToken)
         {
             Thread.Sleep(2000);
-            byte[] buffer = new byte[15 + NumberOfDigitsInInt(expectedQuantity)]; // Adjust the buffer size as needed
+            byte[] buffer = new byte[15 + NumberOfDigitsInInt(expectedQuantity)]; 
             try
             {
                 while (true)
@@ -204,9 +206,12 @@ namespace Implementation.Client
 
         public bool Connect()
         {
-            client = new TcpClient(GetAddress());
+            client = new TcpClient();  // Just create
+            var endpoint = GetAddress();
+
+            client.Connect(endpoint);  // ✅ CONNECT here
             tcpClientStream = client.GetStream();
-            tcpClientStream.ReadTimeout = 2000;
+            tcpClientStream.ReadTimeout = int.MaxValue;
             return tcpClientStream.CanRead && tcpClientStream.CanWrite;
         }
 
@@ -269,14 +274,14 @@ namespace Implementation.Client
             var address = IPAddress.Parse(ipStringDefault);
             if (!IPAddress.TryParse(Ip,out address))
             {
-                Console.WriteLine($"Cannot parse address:{Ip}");
+                throw new Exception($"Cannot parse address:{Ip}:{Port}");
             }
-            return new IPEndPoint(address!, 8080);
+            return new IPEndPoint(address!, Port);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+           
         }
     }
 }

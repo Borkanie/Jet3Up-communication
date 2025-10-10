@@ -40,7 +40,7 @@ namespace Implementation.Factories
         {
             var endpoint = IPEndPoint.Parse(address);
             endpoint.Port = port;
-            if (isAdressNotInUse(endpoint) && !client.IsConnected())
+            if (!isAdressInUse(endpoint) && !client.IsConnected())
             {
                 client.SetHost(address, port);
                 return true;
@@ -55,7 +55,7 @@ namespace Implementation.Factories
         {
             var endpoint = IPEndPoint.Parse(address);
             endpoint.Port = port;
-            if (isAdressNotInUse(endpoint))
+            if (!isAdressInUse(endpoint))
             {
                 Jet3upTCPClient client = new Jet3upTCPClient();
                 client.SetHost(address, port);
@@ -69,7 +69,7 @@ namespace Implementation.Factories
             }
         }
 
-        public bool isAdressNotInUse(IPEndPoint endpoint)
+        public bool isAdressInUse(IPEndPoint endpoint)
         {
             return clients.Any((client) => client.GetAddress() == endpoint);
         }

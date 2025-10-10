@@ -4,6 +4,8 @@
 using Aerotec.Data.Model;
 using Jet3UpInterfaces.Factories;
 using Newtonsoft.Json;
+using System.Text;
+using System.Text.Json;
 
 namespace Implementation.Factories
 {
@@ -68,6 +70,22 @@ namespace Implementation.Factories
             return names;
         }
 
+        public static List<User> GetDefaultUsers()
+        {
+            return new List<User>
+        {
+            new User { Id = "BR 115", Name = "ALECU" },
+            new User { Id = "BR 093", Name = "DOHOTARU" },
+            new User { Id = "BR 041", Name = "BACIU" },
+            new User { Id = "BR 110", Name = "NEGOESCU" },
+            new User { Id = "BR 105", Name = "POENARIU" },
+            new User { Id = "BR 066", Name = "CIREASA" },
+            new User { Id = "BR 134", Name = "LAZAR" },
+            new User { Id = "BR 137", Name = "ZAHARIA" },
+            new User { Id = "BR 123", Name = "ADAM" }
+        };
+        }
+
         /// <inheritdoc/>
         public List<User> GetUsers()
         {
@@ -121,11 +139,23 @@ namespace Implementation.Factories
 
         private static string getUserDataFilePath()
         {
-            string jsonFilePath = AppContext.BaseDirectory + "Resources\\Controllers.json";
-
+            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"Aerotec");
+            if(!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            string jsonFilePath = Path.Combine(folderPath, "Controllers.json");
             if (!File.Exists(jsonFilePath))
             {
-                File.Create(jsonFilePath);
+                var stream = File.Create(jsonFilePath);
+                string json = System.Text.Json.JsonSerializer.Serialize(GetDefaultUsers(), new JsonSerializerOptions { WriteIndented = true });
+                // Convert string to bytes
+                byte[] bytes = Encoding.UTF8.GetBytes(json);
+
+                // Write bytes to file
+                stream.Write(bytes, 0, bytes.Length);
+
+                stream.Close();
             }
 
             return jsonFilePath;

@@ -87,7 +87,7 @@ namespace Jet3UpInterfaces.Client
         /// Any other values will result in unexpected behaviour.</param>
         /// <param name="machine">TThe <see cref="MachineTypeEnum"/> of the machine.</param>
         /// <param name="HTZ">A given number representative of the lot.</param>
-        /// <param name="signature">AD from Aerotec.</param>
+        /// <param name="signature">A-D from Aerotec.</param>
         /// <param name="ANR">A given number preresentative of the lot.</param>
         /// <param name="BTIDX">Id of the command.</param>
         /// <param name="controllerId">id of the controller manning the machine.</param>

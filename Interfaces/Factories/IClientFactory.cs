@@ -28,7 +28,7 @@ namespace Interfaces.Factories
         /// </summary>
         /// <param name="endpoint"></param>
         /// <returns></returns>
-        protected bool isAdressNotInUse(IPEndPoint endpoint);
+        protected bool isAdressInUse(IPEndPoint endpoint);
 
 
         public bool RemoveClient(IClient client);
