@@ -96,7 +96,7 @@ namespace Jet3UpInterfaces.Client
         /// If it's NOT NULL the message will be considered final message and standard size will be written for black machine.
         /// Client specified this configuration.</param>
         public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,            
-            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,
+            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity, int currentQuantity,
             int encoderResolution, string? anzahl);
 
         /// <summary>

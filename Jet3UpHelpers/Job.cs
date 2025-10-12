@@ -34,7 +34,7 @@ namespace Helpers
         /// <summary>
         /// Number of already printed lablels in thi sjob
         /// </summary>
-        public int AlreadyPrinted { get; set; }
+        public int CurrentQuantity { get; set; }
 
         /// <summary>
         /// The list of messages the job has. It can use keys to map them.

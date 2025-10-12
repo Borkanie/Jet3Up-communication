@@ -48,7 +48,7 @@ namespace Helpers.Jobs
         public int ExpectedQuantity { get; set; }
 
         /*inheritdoc*/
-        public int AlreadyPrinted { get; set; }
+        public int CurrentQuantity { get; set; }
 
         /// <summary>
         /// Unused here please use AerotecObjects.
@@ -202,11 +202,11 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 117, 0, 70, 117 };
+                            return new int[] { 0, 127, 0, 80, 127 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 182, 0, 110, 182 };
+                            return new int[] { 0, 192, 0, 120, 192 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 262, 0, 160, 262 };
+                            return new int[] { 0, 272, 0, 160, 272 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }
@@ -215,11 +215,11 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 102, 0, 60, 102 };
+                            return new int[] { 0, 112, 0, 70, 112 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 102, 0, 60, 102 };
+                            return new int[] { 0, 112, 0, 70, 112 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 142, 0, 82, 142 };
+                            return new int[] { 0, 152, 0, 92, 152 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }
@@ -314,7 +314,7 @@ namespace Helpers.Jobs
 
         public string getCounterSetMessage()
         {
-            return $"^0=CC0 {ExpectedQuantity} 3999";
+            return $"^0=CC{CurrentQuantity}\t{ExpectedQuantity}";
         }
     }
 }

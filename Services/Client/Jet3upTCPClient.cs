@@ -22,7 +22,6 @@ namespace Implementation.Client
     {
         private const string ipStringDefault = "0.0.0.0";
         private string name = "Printer";
-        private int expectedQuantity = 0;
         private TcpClient client;
         private Stream tcpClientStream;
         // CancellationTokenSource to allow task cancellation
@@ -73,24 +72,20 @@ namespace Implementation.Client
 
         /// <inheritdoc/>
         public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
-            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity, int encoderResolution, string? anzahl)
+            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity, int currentQuantity, int encoderResolution, string? anzahl)
         {
-            this.expectedQuantity = expectedQuantity;
-
-            Send(IClient.RC);
-
             var job = new AerotecJob(HTZ, signature, ANR, BTIDX, controllerId, anzahl);
+            job.FontSize = size;
+            job.MachineType = machine;
             job.EncoderResolution = encoderResolution;
             job.Rotation = rotation;
             job.Delay = delay;
+            job.ExpectedQuantity = expectedQuantity;
+            job.CurrentQuantity = currentQuantity;
             Thread.Sleep(500);
-            Send(job.getJobStartMessage());
-            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
-            Send(IClient.EQ);
-            Thread.Sleep(500);
-            Send(IClient.GO);
-            if (anzahl == null)
-                StartListening();
+            LoadJob(job);
+            StartJob();
+            StartListening();
         }
 
         /// <inheritdoc/>
@@ -103,8 +98,8 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public void StopCommand()
         {
-            StopListening();
-            Send(IClient.jet3UpStopSequence);
+           Send(IClient.jet3UpStopSequence);
+           StopListening(); 
         }
 
         /// <inheritdoc/>
@@ -125,7 +120,7 @@ namespace Implementation.Client
         private void ListenForResponses(CancellationToken cancellationToken)
         {
             Thread.Sleep(2000);
-            byte[] buffer = new byte[15 + NumberOfDigitsInInt(expectedQuantity)]; 
+            byte[] buffer = new byte[15 + NumberOfDigitsInInt(job.ExpectedQuantity)];
             try
             {
                 while (true)
@@ -147,7 +142,7 @@ namespace Implementation.Client
                             return;
                         }
                         int val = int.Parse(response.Split('C')[2].Split('\t')[0]);
-                        if (val < expectedQuantity)
+                        if (val < job.ExpectedQuantity)
                         {
                             ContinueWriting();
                         }
@@ -179,7 +174,7 @@ namespace Implementation.Client
         private int AskForCurrentIndex(ref byte[] buffer)
         {
             int bytesRead;
-            Send(IClient.CC);
+            Send("^0?CC");
             lock (client)
             {
                 bytesRead = tcpClientStream.Read(buffer, 0, buffer.Length);
@@ -191,7 +186,10 @@ namespace Implementation.Client
         /// <inheritdoc/>
         public void SetCount(int Expected, int current)
         {
-            Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
+            job.ExpectedQuantity = Expected;
+            job.CurrentQuantity = current;
+            Send(job.getCounterSetMessage());
+            Send(IClient.GO);
         }
 
         public void SetHost(string address, int port)
@@ -249,24 +247,18 @@ namespace Implementation.Client
         public void LoadJob(Job job)
         {
             this.job = job;
-
         }
 
         public void StartJob()
         {
-            
             Send(IClient.RC);
-            
-           
             Thread.Sleep(500);
             Send(job.getJobStartMessage());
-            Send(job.getCounterSetMessage());
             Send(IClient.EQ);
-            Thread.Sleep(500);
+            Thread.Sleep(100);
+            Send(job.getCounterSetMessage());
+            Thread.Sleep(300);
             Send(IClient.GO);
-            
-
-            //StartListening();
         }
 
         public IPEndPoint GetAddress()

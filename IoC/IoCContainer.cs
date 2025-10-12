@@ -29,8 +29,8 @@ namespace IoC
             builder.Services.AddSingleton<IClientFactory, ClientFactory>();
             builder.Services.AddSingleton<IUserFactory, UserFactory>();
 #else
-            builder.Services.AddSingleton<IClientFactory, MockCLientFactory>();
-            builder.Services.AddSingleton<IUserFactory, UserFactoryMockup>();
+            builder.Services.AddSingleton<IClientFactory, ClientFactory>();
+            builder.Services.AddSingleton<IUserFactory, UserFactory>();
 
 #endif
             IHost host = builder.Build();

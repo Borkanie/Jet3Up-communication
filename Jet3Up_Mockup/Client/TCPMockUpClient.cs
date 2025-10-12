@@ -72,7 +72,7 @@ namespace Mockup.Client
 
         /// <inheritdoc/>
         public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
-            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,
+            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity, int currentQuantity,
             int encoderResolution, string? anzahl)
         {
             Send(IClient.RC);
