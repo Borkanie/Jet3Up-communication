@@ -246,9 +246,9 @@ namespace Helpers.Jobs
                         case FontSizeEnum.ISO1_5x3:
                             return "1 0 1";
                         case FontSizeEnum.ISO1_7x5:
-                            return "1 1 2";
+                            return "1 1 1";
                         case FontSizeEnum.ISO1_9x7:
-                            return "1 1 2";
+                            return "1 1 1";
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }
