@@ -202,7 +202,7 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 102, 0, 65, 102 };
+                            return new int[] { 0, 102, 0, 70, 102 };
                         case FontSizeEnum.ISO1_7x5:
                             return new int[] { 0, 152, 0, 100, 152 };
                         case FontSizeEnum.ISO1_9x7:
@@ -215,9 +215,9 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 90, 0, 60, 90 };
+                            return new int[] { 0, 90, 0, 65, 90 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 90, 0, 60, 90 };
+                            return new int[] { 0, 90, 0, 65, 90 };
                         case FontSizeEnum.ISO1_9x7:
                             return new int[] { 0, 130, 0, 80, 130 };
                         default:
