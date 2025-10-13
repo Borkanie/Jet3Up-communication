@@ -202,11 +202,11 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 127, 0, 80, 127 };
+                            return new int[] { 0, 112, 0, 65, 112 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 192, 0, 120, 192 };
+                            return new int[] { 0, 172, 0, 100, 172 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 272, 0, 160, 272 };
+                            return new int[] { 0, 252, 0, 140, 252 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }
@@ -215,11 +215,11 @@ namespace Helpers.Jobs
                     switch (size)
                     {
                         case FontSizeEnum.ISO1_5x3:
-                            return new int[] { 0, 112, 0, 70, 112 };
+                            return new int[] { 0, 102, 0, 60, 102 };
                         case FontSizeEnum.ISO1_7x5:
-                            return new int[] { 0, 112, 0, 70, 112 };
+                            return new int[] { 0, 102, 0, 60, 102 };
                         case FontSizeEnum.ISO1_9x7:
-                            return new int[] { 0, 152, 0, 92, 152 };
+                            return new int[] { 0, 140, 0, 80, 140 };
                         default:
                             throw new ArgumentOutOfRangeException(nameof(size));
                     }
