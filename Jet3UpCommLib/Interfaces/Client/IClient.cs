@@ -33,7 +33,12 @@ namespace Jet3UpCommLib.Interfaces.Client
         /// <summary>
         /// Current counter message.
         /// </summary>
-        protected const string CC = "^0?CC";
+        protected const string CC_SET = "^0=CC";
+
+        /// <summary>
+        /// Current counter message.
+        /// </summary>
+        protected const string CC_GET = "^0?CC";
 
         /// <summary>
         /// Safely closes current connection to the printer while ensuring the job stopped.
@@ -83,25 +88,25 @@ namespace Jet3UpCommLib.Interfaces.Client
         /// <param name="anzahl">Final message string.
         /// If it's NOT NULL the message will be considered final message and standard size will be written for black machine.
         /// Client specified this configuration.</param>
-        public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
-            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,
-            int encoderResolution, string? anzahl);
+        //public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
+        //    string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity,
+        //    int encoderResolution, string? anzahl);
 
         /// <summary>
         /// After each message requesting current counter a go message needs to be sent to the machine.
         /// </summary>
-        public void ContinueWriting();
+        public void SendContinueWritingCommand();
 
         /// <summary>
         /// Flag for the connection of the software to the machine.
         /// </summary>
         /// <returns></returns>
-        public bool IsConnected();
+        public bool CheckConnection();
 
         /// <summary>
         /// Interrupts all current executation by sending a stop signal to the machine.
         /// </summary>
-        public void StopCommand();
+        public void SendStopCommand();
 
         /// <summary>
         /// A message from the machine has been recieved and parsed.
@@ -119,7 +124,7 @@ namespace Jet3UpCommLib.Interfaces.Client
         /// </summary>
         /// <param name="expected">The quantity that needs to be printed.</param>
         /// <param name="current">The quantity that has been actually printed.</param>
-        public void SetCount(int expected, int current);
+        public void SendSetCountCommand(int expected, int current);
 
         public void StopListening();
 
@@ -129,6 +134,9 @@ namespace Jet3UpCommLib.Interfaces.Client
 
         public IPEndPoint GetAddress();
 
-        public void SendJobToMachine();
+        /// <summary>
+        /// Deploys the loaded job on the machine and starts the printing process by sending the necessary messages to the machine.
+        /// </summary>
+        public void DeployJobOnMachineAndStartWriting();
     }
 }

@@ -2,7 +2,6 @@
 // All Rigths reserved.
 
 using Jet3UpCommLib.Helpers;
-using Jet3UpCommLib.Helpers.Jobs;
 using Jet3UpCommLib.Helpers.Resources;
 using Jet3UpCommLib.Interfaces.Client;
 using Microsoft.VisualBasic;
@@ -53,13 +52,13 @@ namespace Jet3UpCommLib.Implementation.Client
         }
 
         /// <inheritdoc/>
-        public void ContinueWriting()
+        public void SendContinueWritingCommand()
         {
             Send(IClient.GO);
         }
 
         /// <inheritdoc/>
-        public bool IsConnected()
+        public bool CheckConnection()
         {
             return client != null && client.Connected;
         }
@@ -69,7 +68,7 @@ namespace Jet3UpCommLib.Implementation.Client
         {
             if (client == null)
                 return;
-            if (IsConnected())
+            if (CheckConnection())
             {
                 byte[] SENDBYTES = Encoding.ASCII.GetBytes(text + Constants.vbCrLf);
                 try
@@ -88,26 +87,6 @@ namespace Jet3UpCommLib.Implementation.Client
         }
 
         /// <inheritdoc/>
-        public void StartWriting(int delay, FontSizeEnum size, int rotation, MachineTypeEnum machine,
-            string HTZ, string signature, string ANR, string BTIDX, string controllerId, int expectedQuantity, int encoderResolution, string? anzahl)
-        {
-            this.expectedQuantity = expectedQuantity;
-
-            Send(IClient.RC);
-
-            var job = new AerotecJob(HTZ, signature, ANR, BTIDX, controllerId, anzahl);
-
-            Thread.Sleep(500);
-            Send(job.getJobStartMessage());
-            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
-            Send(IClient.EQ);
-            Thread.Sleep(500);
-            Send(IClient.GO);
-            if (anzahl == null)
-                StartListening();
-        }
-
-        /// <inheritdoc/>
         public void StopListening()
         {
             cancellationTokenSource?.Cancel();
@@ -115,7 +94,7 @@ namespace Jet3UpCommLib.Implementation.Client
         }
 
         /// <inheritdoc/>
-        public void StopCommand()
+        public void SendStopCommand()
         {
             StopListening();
             Send(IClient.jet3UpStopSequence);
@@ -124,7 +103,7 @@ namespace Jet3UpCommLib.Implementation.Client
         /// <inheritdoc/>
         public void StartListening()
         {
-            if (IsConnected())
+            if (CheckConnection())
             {
                 if (cancellationTokenSource == null)
                 {
@@ -139,7 +118,7 @@ namespace Jet3UpCommLib.Implementation.Client
         private void ListenForResponses(CancellationToken cancellationToken)
         {
             Thread.Sleep(2000);
-            byte[] buffer = new byte[15 + NumberOfDigitsInInt(expectedQuantity)]; // Adjust the buffer size as needed
+            byte[] buffer = new byte[15 + Commons.NumberOfDigitsInInt(expectedQuantity)]; // Adjust the buffer size as needed
             try
             {
                 while (true)
@@ -163,7 +142,7 @@ namespace Jet3UpCommLib.Implementation.Client
                         int val = int.Parse(response.Split('C')[2].Split('\t')[0]);
                         if (val < expectedQuantity)
                         {
-                            ContinueWriting();
+                            SendContinueWritingCommand();
                         }
                         Jet3UpMessageHendler?.Invoke(this, new Jet3UpMessageHendlerEventArgs(Jet3UpStatusMessageType.Marked, response.Split('C')[2].Split('\t')[0]));
 
@@ -178,22 +157,10 @@ namespace Jet3UpCommLib.Implementation.Client
         }
 
         /// <inheritdoc/>
-        private int NumberOfDigitsInInt(int expectedQuantity)
-        {
-            int result = 0;
-            while (expectedQuantity > 0)
-            {
-                expectedQuantity = expectedQuantity / 10;
-                result++;
-            }
-            return result;
-        }
-
-        /// <inheritdoc/>
         private int AskForCurrentIndex(ref byte[] buffer)
         {
             int bytesRead;
-            Send(IClient.CC);
+            Send(IClient.CC_GET);
             if (client == null || tcpClientStream == null)
                 return -1;
             lock (client)
@@ -205,9 +172,9 @@ namespace Jet3UpCommLib.Implementation.Client
         }
 
         /// <inheritdoc/>
-        public void SetCount(int Expected, int current)
+        public void SendSetCountCommand(int Expected, int current)
         {
-            Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
+            Send($"{IClient.CC_SET} {current} {Constants.vbTab} {Expected} 3999");
         }
 
         public bool Connect()
@@ -242,18 +209,17 @@ namespace Jet3UpCommLib.Implementation.Client
         }
 
         /* inheritdoc */
-        public void SendJobToMachine()
+        public void DeployJobOnMachineAndStartWriting()
         {
             if (job == null)
                 return;
             Send(IClient.RC);
             Thread.Sleep(500);
-            Send(job!.getJobStartMessage());
-            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(job!.getJobConfigurationMessage());
+            SendSetCountCommand(expectedQuantity, 0);
             Send(IClient.EQ);
             Thread.Sleep(500);
-            Send(IClient.GO);
-
+            SendContinueWritingCommand();
             StartListening();
         }
 
@@ -266,9 +232,9 @@ namespace Jet3UpCommLib.Implementation.Client
         /* inheritdoc */
         void InternalClient.SetHost(string address, int port)
         {
-            if (IsConnected())
+            if (CheckConnection())
             {
-                StopCommand();
+                SendStopCommand();
             }
             target = IPEndPoint.Parse(address + ":" + port.ToString());
         }

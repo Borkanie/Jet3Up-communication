@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36930.0 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jet3UpCommLib", "Jet3UpCommLib.csproj", "{AD3678BB-10F0-C980-D962-522AC5B40E5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jet3UpCommlibUnitTests", "..\Jet3UpCommlibUnitTests\Jet3UpCommlibUnitTests.csproj", "{F13F9017-0640-4854-805A-407C9931973E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD3678BB-10F0-C980-D962-522AC5B40E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD3678BB-10F0-C980-D962-522AC5B40E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD3678BB-10F0-C980-D962-522AC5B40E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD3678BB-10F0-C980-D962-522AC5B40E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F13F9017-0640-4854-805A-407C9931973E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F13F9017-0640-4854-805A-407C9931973E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F13F9017-0640-4854-805A-407C9931973E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F13F9017-0640-4854-805A-407C9931973E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F748CF2-200E-45B1-9E11-88F3E80A6BD2}
+	EndGlobalSection
+EndGlobal

@@ -15,9 +15,9 @@ namespace Jet3UpCommLib.Implementation.Factories
         {
             try
             {
-                if (client.IsConnected())
+                if (client.CheckConnection())
                 {
-                    client.StopCommand();
+                    client.SendStopCommand();
                     client.StopListening();
                     client.Disconect();
                 }
@@ -35,7 +35,7 @@ namespace Jet3UpCommLib.Implementation.Factories
         {
             var endpoint = IPEndPoint.Parse(address);
             endpoint.Port = port;
-            if (!isAdressInUse(endpoint) && !client.IsConnected())
+            if (!isAdressInUse(endpoint) && !client.CheckConnection())
             {
                 ((InternalClient)client).SetHost(address, port);
                 return true;

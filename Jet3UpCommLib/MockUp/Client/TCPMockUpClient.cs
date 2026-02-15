@@ -50,16 +50,16 @@ namespace Jet3UpCommLib.MockUp.Client
         }
 
         /// <inheritdoc/>
-        public void ContinueWriting()
+        public void SendContinueWritingCommand()
         {
-            fileInterface.Write("ContinueWriting method called");
+            fileInterface.Write("SendContinueWritingCommand method called");
             Send(IClient.GO);
         }
 
         /// <inheritdoc/>
-        public bool IsConnected()
+        public bool CheckConnection()
         {
-            fileInterface.Write("IsConnected method called");
+            fileInterface.Write("CheckConnection method called");
             return true;
         }
 
@@ -79,24 +79,24 @@ namespace Jet3UpCommLib.MockUp.Client
 
             var job = new AerotecJob(HTZ, signature, ANR, BTIDX, controllerId, anzahl);
 
-            Send(job.getJobStartMessage());
-            Send($"{IClient.CC}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
+            Send(job.getJobConfigurationMessage());
+            Send($"{IClient.CC_SET}0" + Constants.vbTab + expectedQuantity.ToString() + Constants.vbTab + "3999");
             Send(IClient.EQ);
             Send(IClient.GO);
             fileInterface.StartReading(expectedQuantity);
         }
 
         /// <inheritdoc/>
-        public void StopCommand()
+        public void SendStopCommand()
         {
             fileInterface.StopReading();
             Send(IClient.jet3UpStopSequence);
         }
 
         /// <inheritdoc/>
-        public void SetCount(int Expected, int current)
+        public void SendSetCountCommand(int Expected, int current)
         {
-            Send($"{IClient.CC} {current} {Constants.vbTab} {Expected} 3999");
+            Send($"{IClient.CC_SET} {current} {Constants.vbTab} {Expected} 3999");
         }
 
         /// <inheritdoc/>
@@ -151,14 +151,14 @@ namespace Jet3UpCommLib.MockUp.Client
             return target;
         }
 
-        public void SendJobToMachine()
+        public void DeployJobOnMachineAndStartWriting()
         {
             if (job == null)
                 return;
             Send(IClient.RC);
             Thread.Sleep(500);
-            Send(job!.getJobStartMessage());
-            Send($"{IClient.CC}0" + Constants.vbTab + 100.ToString() + Constants.vbTab + "3999");
+            Send(job!.getJobConfigurationMessage());
+            Send($"{IClient.CC_SET}0" + Constants.vbTab + 100.ToString() + Constants.vbTab + "3999");
             Send(IClient.EQ);
             Thread.Sleep(500);
             Send(IClient.GO);

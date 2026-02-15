@@ -57,7 +57,7 @@ namespace Jet3UpCommLib.Helpers.Jobs
         public Dictionary<Keys, string> AerotecObjects { get; set; } = new Dictionary<Keys, string>();
 
         /*inheritdoc*/
-        public string getJobStartMessage()
+        public string getJobConfigurationMessage()
         {
             var message = getSizeMessage();
             if (AerotecObjects.ContainsKey(Keys.Anzahl))

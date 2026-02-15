@@ -43,6 +43,6 @@
         /// Get's the job's inititalizaiton  message.
         /// </summary>
         /// <returns></returns>
-        public string getJobStartMessage();
+        public string getJobConfigurationMessage();
     }
 }
