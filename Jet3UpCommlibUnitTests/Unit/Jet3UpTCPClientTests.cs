@@ -1,6 +1,7 @@
 ﻿using Jet3UpCommLib.Helpers.Jobs;
 using Jet3UpCommLib.Implementation.Factories;
 using Jet3UpCommLib.Tests.Helpers;
+using Microsoft.VisualBasic;
 
 namespace Jet3UpCommlibUnitTests.Unit
 {
@@ -38,6 +39,7 @@ namespace Jet3UpCommlibUnitTests.Unit
             client.Disconect();
         }
 
+
         [Fact]
         public void StartWriting_WithJob_SendsExpectedMessages()
         {
@@ -66,6 +68,67 @@ namespace Jet3UpCommlibUnitTests.Unit
             Assert.Contains("^0=CC", messages.Dequeue().Message);
             Assert.Contains("EQ", messages.Dequeue().Message);
             Assert.Contains("GO", messages.Dequeue().Message);
+        }
+
+        [Fact]
+        public void SendSetCount_WithJob_SendsExpectedMessages()
+        {
+            var factory = new ClientFactory();
+            var client = factory.CreateClient(server.LocalEndPoint.Address.ToString(), server.LocalEndPoint.Port, "test");
+
+            // Connect to the in-process server
+            var connected = client.Connect();
+            Assert.True(connected);
+            var job = new AerotecJob("HTZ", "SIG", "ANR", "BTIDX", "CTRL");
+            client.LoadJob(job);
+            client.SendSetCountCommand(100, 10);
+
+            var messages = server.GetMessages();
+
+            client.Disconect();
+            Assert.Single(messages);
+            Assert.Equal($"^0=CC 10 {Constants.vbTab} 100 3999\r\n", messages.Dequeue().Message);
+        }
+
+        [Fact]
+        public void SendStop_WithJob_SendsExpectedMessages()
+        {
+            var factory = new ClientFactory();
+            var client = factory.CreateClient(server.LocalEndPoint.Address.ToString(), server.LocalEndPoint.Port, "test");
+
+            // Connect to the in-process server
+            var connected = client.Connect();
+            Assert.True(connected);
+
+            var job = new AerotecJob("HTZ", "SIG", "ANR", "BTIDX", "CTRL");
+            client.LoadJob(job);
+            client.SendStopCommand();
+
+            var messages = server.GetMessages();
+
+            client.Disconect();
+            Assert.Single(messages);
+            Assert.Equal("^0!ST\r\n", messages.Dequeue().Message);
+        }
+
+
+        [Fact]
+        public void SendStop_WithouthJob_SendsExpectedMessages()
+        {
+            var factory = new ClientFactory();
+            var client = factory.CreateClient(server.LocalEndPoint.Address.ToString(), server.LocalEndPoint.Port, "test");
+
+            // Connect to the in-process server
+            var connected = client.Connect();
+            Assert.True(connected);
+
+            client.SendStopCommand();
+
+            var messages = server.GetMessages();
+
+            client.Disconect();
+            Assert.Single(messages);
+            Assert.Equal("^0!ST\r\n", messages.Dequeue().Message);
         }
 
 

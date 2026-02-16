@@ -216,7 +216,9 @@ namespace Jet3UpCommLib.Implementation.Client
             Send(IClient.RC);
             Thread.Sleep(500);
             Send(job!.getJobConfigurationMessage());
+            Thread.Sleep(250);
             SendSetCountCommand(expectedQuantity, 0);
+            Thread.Sleep(250);
             Send(IClient.EQ);
             Thread.Sleep(500);
             SendContinueWritingCommand();
