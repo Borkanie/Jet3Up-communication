@@ -139,7 +139,7 @@ namespace Implementation.Factories
 
         private static string getUserDataFilePath()
         {
-            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"Aerotec");
+            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             if(!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
