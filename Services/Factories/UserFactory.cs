@@ -73,17 +73,17 @@ namespace Implementation.Factories
         public static List<User> GetDefaultUsers()
         {
             return new List<User>
-        {
-            new User { Id = "BR 115", Name = "ALECU" },
-            new User { Id = "BR 093", Name = "DOHOTARU" },
-            new User { Id = "BR 041", Name = "BACIU" },
-            new User { Id = "BR 110", Name = "NEGOESCU" },
-            new User { Id = "BR 105", Name = "POENARIU" },
-            new User { Id = "BR 066", Name = "CIREASA" },
-            new User { Id = "BR 134", Name = "LAZAR" },
-            new User { Id = "BR 137", Name = "ZAHARIA" },
-            new User { Id = "BR 123", Name = "ADAM" }
-        };
+            {
+                new User { Id = "B 115", Name = "ALECU" },
+                new User { Id = "B 093", Name = "DOHOTARU" },
+                new User { Id = "B 041", Name = "BACIU" },
+                new User { Id = "B 110", Name = "NEGOESCU" },
+                new User { Id = "B 105", Name = "POENARIU" },
+                new User { Id = "B 066", Name = "CIREASA" },
+                new User { Id = "B 134", Name = "LAZAR" },
+                new User { Id = "B 137", Name = "ZAHARIA" },
+                new User { Id = "B 123", Name = "ADAM" }
+            };
         }
 
         /// <inheritdoc/>
