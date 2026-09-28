@@ -1,38 +1,38 @@
 [
   {
-    "Id": "BR 115",
+    "Id": "B 115",
     "Name": "ALECU"
   },
   {
-    "Id": "BR 093",
+    "Id": "B 093",
     "Name": "DOHOTARU"
   },
   {
-    "Id": "BR 041",
+    "Id": "B 041",
     "Name": "BACIU"
   },
   {
-    "Id": "BR 110",
+    "Id": "B  R 110",
     "Name": "NEGOESCU"
   },
   {
-    "Id": "BR 105",
+    "Id": "B 105",
     "Name": "POENARIU"
   },
   {
-    "Id": "BR 066",
+    "Id": "B 066",
     "Name": "CIREASA"
   },
   {
-    "Id": "BR 134",
+    "Id": "B 134",
     "Name": "LAZAR"
   },
   {
-    "Id": "BR 137",
+    "Id": "B 137",
     "Name": "ZAHARIA"
   },
   {
-    "Id": "BR 123",
+    "Id": "B 123",
     "Name": "ADAM"
   }
 ]
